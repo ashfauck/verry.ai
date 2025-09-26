@@ -1,0 +1,80 @@
+# iOS native code
+/ios/
+
+# Android native code  
+/android/
+
+# node_modules
+node_modules/
+
+# Metro
+.metro-health-check*
+
+# macOS
+.DS_Store
+
+# iOS
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+# Android
+*.keystore
+!debug.keystore
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Bundle artifacts
+*.jsbundle
+
+# VSCode
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
+
+# CocoaPods
+/ios/Pods/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Xcode
+build/
+*.xcworkspace
+!default.xcworkspace
+
+# Android Studio
+*.iml
+.idea/
+.gradle/
+/android/app/build/

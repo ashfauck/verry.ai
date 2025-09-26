@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verry.ai Document Detection Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .camera-container {
+            position: relative;
+            height: 300px;
+            margin: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .document-frame {
+            width: 280px;
+            height: 176px;
+            border: 2px dashed #6b7280;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .document-frame.detected {
+            border: 3px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border-style: solid;
+        }
+        
+        .frame-text {
+            color: #9ca3af;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .frame-text.detected {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .bounding-box {
+            position: absolute;
+            border: 2px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 6px;
+            display: none;
+            transition: all 0.2s ease;
+        }
+        
+        .bounding-box.visible {
+            display: block;
+        }
+        
+        .corner {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #10b981;
+        }
+        
+        .corner.top-left {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 6px;
+        }
+        
+        .corner.top-right {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 6px;
+        }
+        
+        .corner.bottom-left {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 6px;
+        }
+        
+        .corner.bottom-right {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .confidence-indicator {
+            position: absolute;
+            top: -25px;
+            right: 0;
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 24px;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 16px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-bottom: 12px;
+        }
+        
+        .button:hover {
+            background: #4338ca;
+        }
+        
+        .button.success {
+            background: #10b981;
+        }
+        
+        .button.success:hover {
+            background: #059669;
+        }
+        
+        .button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">Document Detection</div>
+            <div class="subtitle">Verry.ai Live Demo</div>
+        </div>
+        
+        <div class="camera-container">
+            <div class="document-frame" id="documentFrame">
+                <div class="frame-text" id="frameText">Position your ID front here</div>
+                
+                <!-- Dynamic bounding box -->
+                <div class="bounding-box" id="boundingBox">
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                    <div class="confidence-indicator" id="confidenceIndicator">0%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="button" id="startDetectionBtn" onclick="startDetection()">
+                Start Document Detection
+            </button>
+            
+            <button class="button" id="captureBtn" onclick="captureDocument()" disabled>
+                📷 Capture Document
+            </button>
+            
+            <div class="status info" id="status">
+                Ready to detect documents. Click "Start Detection" to begin.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let detectionActive = false;
+        let detectionInterval = null;
+        let confidence = 0;
+        let stableFrames = 0;
+        let isDocumentDetected = false;
+        
+        const documentFrame = document.getElementById('documentFrame');
+        const frameText = document.getElementById('frameText');
+        const boundingBox = document.getElementById('boundingBox');
+        const confidenceIndicator = document.getElementById('confidenceIndicator');
+        const startBtn = document.getElementById('startDetectionBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const status = document.getElementById('status');
+        
+        function updateStatus(message, type = 'info') {
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function startDetection() {
+            if (detectionActive) {
+                stopDetection();
+                return;
+            }
+            
+            detectionActive = true;
+            startBtn.textContent = 'Stop Detection';
+            startBtn.style.background = '#dc2626';
+            captureBtn.disabled = false;
+            
+            updateStatus('🔍 Detecting documents... Position an ID or card in the frame', 'info');
+            
+            // Simulate document detection every 200ms
+            detectionInterval = setInterval(() => {
+                simulateDetection();
+            }, 200);
+        }
+        
+        function stopDetection() {
+            detectionActive = false;
+            clearInterval(detectionInterval);
+            
+            startBtn.textContent = 'Start Document Detection';
+            startBtn.style.background = '#4f46e5';
+            captureBtn.disabled = true;
+            
+            // Reset UI
+            documentFrame.classList.remove('detected');
+            frameText.classList.remove('detected');
+            boundingBox.classList.remove('visible');
+            frameText.textContent = 'Position your ID front here';
+            
+            confidence = 0;
+            stableFrames = 0;
+            isDocumentDetected = false;
+            
+            updateStatus('Detection stopped. Click "Start Detection" to begin again.', 'info');
+        }
+        
+        function simulateDetection() {
+            // Simulate random document detection
+            const hasDocument = Math.random() > 0.4; // 60% chance
+            
+            if (hasDocument) {
+                // Gradually increase confidence
+                confidence = Math.min(100, confidence + Math.random() * 15);
+                
+                // Update confidence display
+                confidenceIndicator.textContent = Math.round(confidence) + '%';
+                
+                // Show bounding box
+                boundingBox.classList.add('visible');
+                
+                if (confidence >= 85) {
+                    stableFrames++;
+                    documentFrame.classList.add('detected');
+                    frameText.classList.add('detected');
+                    
+                    if (stableFrames >= 10) { // ~2 seconds at 200ms intervals
+                        frameText.textContent = '✓ Document detected! Auto-capturing...';
+                        captureBtn.classList.add('success');
+                        updateStatus('🎯 Perfect! Document is stable and ready for capture.', 'success');
+                        
+                        // Auto-capture after 1 more second
+                        setTimeout(() => {
+                            if (detectionActive) {
+                                captureDocument();
+                            }
+                        }, 1000);
+                        isDocumentDetected = true;
+                    } else {
+                        frameText.textContent = `Hold steady... ${Math.round(confidence)}%`;
+                        updateStatus(`📐 Document detected with ${Math.round(confidence)}% confidence. Hold steady...`, 'warning');
+                    }
+                } else {
+                    documentFrame.classList.remove('detected');
+                    frameText.classList.remove('detected');
+                    frameText.textContent = `Hold steady... ${Math.round(confidence)}%`;
+                    stableFrames = 0;
+                    updateStatus(`🎯 Document found! Confidence: ${Math.round(confidence)}%. Keep it steady.`, 'info');
+                }
+            } else {
+                // No document detected
+                confidence = Math.max(0, confidence - 10);
+                confidenceIndicator.textContent = Math.round(confidence) + '%';
+                
+                if (confidence < 50) {
+                    boundingBox.classList.remove('visible');
+                    documentFrame.classList.remove('detected');
+                    frameText.classList.remove('detected');
+                    frameText.textContent = 'Position your ID front here';
+                    stableFrames = 0;
+                    isDocumentDetected = false;
+                    captureBtn.classList.remove('success');
+                    updateStatus('👀 Looking for documents... Position an ID or card in the frame.', 'info');
+                }
+            }
+        }
+        
+        function captureDocument() {
+            if (!detectionActive && !isDocumentDetected) {
+                updateStatus('⚠️ Start detection first or wait for document to be detected.', 'warning');
+                return;
+            }
+            
+            // Simulate capture
+            updateStatus('📸 Capturing document... Processing image...', 'success');
+            
+            setTimeout(() => {
+                updateStatus('✅ Document captured successfully! Ready for next step.', 'success');
+                stopDetection();
+                
+                // Show success message
+                frameText.textContent = '✅ Document Captured!';
+                frameText.style.color = '#10b981';
+                
+                setTimeout(() => {
+                    frameText.textContent = 'Position your ID front here';
+                    frameText.style.color = '#9ca3af';
+                }, 3000);
+            }, 1500);
+        }
+        
+        // Auto-start demo
+        setTimeout(() => {
+            updateStatus('💡 Demo ready! This simulates the live document detection system.', 'info');
+        }, 1000);
+    </script>
+</body>
+</html>
