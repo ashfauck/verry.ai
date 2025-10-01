@@ -52,8 +52,16 @@ export default environment;
 
 // Helper functions for common environment checks
 export const isDevelopment = (): boolean => environment.nodeEnv === 'development';
+export const isStaging = (): boolean => environment.nodeEnv === 'staging';
 export const isProduction = (): boolean => environment.nodeEnv === 'production';
 export const isDebugMode = (): boolean => environment.debugMode;
+
+// Environment type checker
+export const getEnvironmentType = (): 'development' | 'staging' | 'production' => {
+  if (isDevelopment()) return 'development';
+  if (isStaging()) return 'staging';
+  return 'production';
+};
 
 // API URL builder
 export const buildApiUrl = (endpoint: string): string => {
