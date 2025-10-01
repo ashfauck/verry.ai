@@ -25,57 +25,29 @@ export const CropTestOverlay: React.FC<CropTestOverlayProps> = ({
     return null;
   }
 
-  // Calculate camera preview bounds within the container (same logic as frameCropper)
+  // Use simplified container-based preview bounds (matching frameCropper logic)
   const containerWidth = screenWidth;
   const containerHeight = screenHeight;
   const containerAspect = containerWidth / containerHeight;
   const photoAspect = photoSize.width / photoSize.height;
   
-  // Calculate actual camera preview bounds (cover-mode)
-  let previewBounds: { x: number; y: number; width: number; height: number };
-  
-  if (Math.abs(containerAspect - photoAspect) < 0.01) {
-    // Aspects match - preview fills entire container
-    previewBounds = { x: 0, y: 0, width: containerWidth, height: containerHeight };
-  } else if (photoAspect > containerAspect) {
-    // Photo is wider than container - fit to container height, center horizontally
-    const previewHeight = containerHeight;
-    const previewWidth = previewHeight * photoAspect;
-    previewBounds = {
-      x: (containerWidth - previewWidth) / 2,
-      y: 0,
-      width: previewWidth,
-      height: previewHeight
-    };
-  } else {
-    // Photo is taller than container - fit to container width, center vertically  
-    const previewWidth = containerWidth;
-    const previewHeight = previewWidth / photoAspect;
-    previewBounds = {
-      x: 0,
-      y: (containerHeight - previewHeight) / 2,
-      width: previewWidth,
-      height: previewHeight
-    };
-  }
-  
-  // Convert frame coordinates from container space to preview space
-  const frameInPreview = {
-    x: documentBounds.x - previewBounds.x,
-    y: documentBounds.y - previewBounds.y,
-    width: documentBounds.width,
-    height: documentBounds.height
+  // Preview bounds = container bounds (simplified approach)
+  const previewBounds = {
+    x: 0,
+    y: 0,
+    width: containerWidth,
+    height: containerHeight
   };
   
-  // Scale from preview coordinates to photo coordinates
-  const previewToPhotoScaleX = photoSize.width / previewBounds.width;
-  const previewToPhotoScaleY = photoSize.height / previewBounds.height;
+  // Direct scaling from container to photo
+  const containerToPhotoScaleX = photoSize.width / containerWidth;
+  const containerToPhotoScaleY = photoSize.height / containerHeight;
   
-  // Apply accurate scaling
-  const photoX = frameInPreview.x * previewToPhotoScaleX;
-  const photoY = frameInPreview.y * previewToPhotoScaleY;
-  const photoWidth = frameInPreview.width * previewToPhotoScaleX;
-  const photoHeight = frameInPreview.height * previewToPhotoScaleY;
+  // Apply direct scaling
+  const photoX = documentBounds.x * containerToPhotoScaleX;
+  const photoY = documentBounds.y * containerToPhotoScaleY;
+  const photoWidth = documentBounds.width * containerToPhotoScaleX;
+  const photoHeight = documentBounds.height * containerToPhotoScaleY;
   
   const imageBounds = {
     x: Math.max(0, Math.round(photoX)),
@@ -85,9 +57,9 @@ export const CropTestOverlay: React.FC<CropTestOverlayProps> = ({
   };
   
   const aspectMismatch = Math.abs(containerAspect - photoAspect) > 0.1;
-  const frameOutsidePreview = frameInPreview.x < 0 || frameInPreview.y < 0 || 
-    frameInPreview.x + frameInPreview.width > previewBounds.width ||
-    frameInPreview.y + frameInPreview.height > previewBounds.height;
+  const frameWithinBounds = documentBounds.x >= 0 && documentBounds.y >= 0 && 
+    documentBounds.x + documentBounds.width <= containerWidth &&
+    documentBounds.y + documentBounds.height <= containerHeight;
 
   const styles = StyleSheet.create({
     overlay: {
@@ -134,41 +106,34 @@ export const CropTestOverlay: React.FC<CropTestOverlayProps> = ({
         Screen: {screenWidth}×{screenHeight}{'\n'}
         Photo: {photoSize.width}×{photoSize.height}{'\n'}
         {'\n'}
-        Preview Bounds:{'\n'}
-        x:{previewBounds.x.toFixed(0)} y:{previewBounds.y.toFixed(0)}{'\n'}
-        w:{previewBounds.width.toFixed(0)} h:{previewBounds.height.toFixed(0)}{'\n'}
-        {'\n'}
         Blue Box (container):{'\n'}
         x:{documentBounds.x.toFixed(0)} y:{documentBounds.y.toFixed(0)}{'\n'}
         w:{documentBounds.width.toFixed(0)} h:{documentBounds.height.toFixed(0)}{'\n'}
-        {'\n'}
-        Frame in Preview:{'\n'}
-        x:{frameInPreview.x.toFixed(0)} y:{frameInPreview.y.toFixed(0)}{'\n'}
-        w:{frameInPreview.width.toFixed(0)} h:{frameInPreview.height.toFixed(0)}{'\n'}
         {'\n'}
         Final Crop (photo):{'\n'}
         x:{imageBounds.x} y:{imageBounds.y}{'\n'}
         w:{imageBounds.width} h:{imageBounds.height}{'\n'}
         {'\n'}
-        Preview→Photo Scale: {previewToPhotoScaleX.toFixed(3)}×{previewToPhotoScaleY.toFixed(3)}{'\n'}
+        Container→Photo Scale: {containerToPhotoScaleX.toFixed(3)}×{containerToPhotoScaleY.toFixed(3)}{'\n'}
+        Crop Area: {((imageBounds.width * imageBounds.height) / (photoSize.width * photoSize.height) * 100).toFixed(1)}%{'\n'}
         Aspects: {containerAspect.toFixed(3)} | {photoAspect.toFixed(3)}{'\n'}
-        Method: Camera-Preview-Aware
+        Method: Direct-Container-Mapping
       </Text>
       
-      {frameOutsidePreview ? (
+      {!frameWithinBounds ? (
         <Text style={styles.warningText}>
-          ⚠️ Frame outside preview bounds!{'\n'}
-          Cropping may be inaccurate
+          ⚠️ Frame outside container bounds!{'\n'}
+          Check frame positioning
         </Text>
       ) : aspectMismatch ? (
         <Text style={styles.warningText}>
           ⚠️ Aspect mismatch detected{'\n'}
-          Using preview bounds compensation
+          Using direct container mapping
         </Text>
       ) : (
         <Text style={styles.successText}>
-          ✅ Frame within preview bounds{'\n'}
-          Accurate cropping expected
+          ✅ Frame positioned correctly{'\n'}
+          Direct mapping applied
         </Text>
       )}
     </View>

@@ -16,6 +16,7 @@ import {Button} from '../components';
 import {verificationState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
 import type {NavigationProps} from '../types';
+import { createFallbackCrop } from '@/utils/polygonCropper';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -106,6 +107,42 @@ const DocumentConfirmationScreen: React.FC = () => {
       setIsLoading(false);
     }
   };
+/**
+   * Handle fallback cropping when polygon detection fails
+   */
+  // const handleFallbackCrop = async () => {
+  //   if (!params.originalImageUri) {
+  //     Alert.alert('Error', 'No image available for cropping');
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   try {
+  //     console.log('[DocumentReview] Starting fallback crop');
+      
+  //     const imageSize = { width: 4032, height: 3024 }; // Default camera resolution
+  //     const options: PolygonCropOptions = {
+  //       padding: 50,
+  //       quality: 0.8
+  //     };
+
+  //     const result = await createFallbackCrop(params.originalImageUri, imageSize, options);
+      
+  //     setCropResult(result);
+  //     if (result.success) {
+  //       setCroppedImage(result.croppedUri);
+  //       console.log('[DocumentReview] Fallback crop successful:', result.croppedUri);
+  //     } else {
+  //       console.error('[DocumentReview] Fallback crop failed:', result.error);
+  //       Alert.alert('Cropping Failed', result.error || 'Unknown error occurred');
+  //     }
+  //   } catch (error) {
+  //     console.error('[DocumentReview] Fallback crop error:', error);
+  //     Alert.alert('Error', 'Failed to create fallback crop. Please try again.');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleRetakeDocument = () => {
     // Go back to document verification screen
@@ -245,7 +282,7 @@ const DocumentConfirmationScreen: React.FC = () => {
             <Image
               source={{ uri: params.croppedImageUri }}
               style={styles.croppedImage}
-              resizeMode="contain"
+              resizeMode="stretch"
               onError={handleImageError}
             />
             <View style={styles.qualityInfo}>
@@ -267,7 +304,13 @@ const DocumentConfirmationScreen: React.FC = () => {
             fullWidth
           />
         </View>
-        
+        {/* <Button
+          title="Fallback Crop (Center Rectangle)"
+          onPress={handleFallbackCrop}
+          loading={isLoading}
+          disabled={false}
+          variant={'outline'}
+        /> */}
         <Button
           title={STRINGS.document.retakePicture}
           onPress={handleRetakeDocument}

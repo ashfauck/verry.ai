@@ -98,7 +98,7 @@ const EmailVerificationScreen: React.FC = () => {
         STRINGS.auth.emailVerified,
         [{
           text: STRINGS.common.continue,
-          onPress: () => navigation.navigate('DocumentVerification', { step: 'front' })
+          onPress: () => navigation.navigate('DocumentCapture')
         }]
       );
     } catch (error) {
@@ -116,7 +116,7 @@ const EmailVerificationScreen: React.FC = () => {
       currentStep: 'document_front',
       error: null,
     }));
-    navigation.navigate('DocumentVerification', { step: 'front' });
+    navigation.navigate('DocumentCapture');
   };
 
   const styles = StyleSheet.create({

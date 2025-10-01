@@ -60,6 +60,14 @@ export const STRINGS = {
     processingDocument: 'Processing document...',
   },
   
+  // Document Verification Screen
+  documentVerification: {
+    scanFrontTitle: 'Scan Front of ID',
+    scanBackTitle: 'Scan Back of ID', 
+    scanFrontSubtitle: 'Position the front of your ID document in good lighting and tap "Scan Document" to begin.',
+    scanBackSubtitle: 'Now position the back of your ID document and tap "Scan Document" to complete verification.',
+  },
+  
   // Facial Recognition
   face: {
     facialVerification: 'Facial Verification',

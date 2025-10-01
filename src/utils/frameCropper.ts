@@ -38,119 +38,85 @@ export class FrameCropper {
     return uri;
   }
 
-  /**
-   * Calculate the actual camera preview bounds within the camera container
-   * This accounts for React Native Camera's cover-mode scaling behavior
-   */
-  private static calculateCameraPreviewBounds(
-    containerSize: { width: number; height: number },
-    photoSize: PhotoSize
-  ): { x: number; y: number; width: number; height: number } {
-    const containerAspect = containerSize.width / containerSize.height;
-    const photoAspect = photoSize.width / photoSize.height;
-    
-    console.log('[FrameCropper] Camera preview bounds calculation:');
-    console.log('  Container:', containerSize, 'aspect:', containerAspect.toFixed(3));
-    console.log('  Photo:', photoSize, 'aspect:', photoAspect.toFixed(3));
-    
-    if (Math.abs(containerAspect - photoAspect) < 0.01) {
-      // Aspects match - preview fills entire container
-      console.log('  → Preview fills entire container (aspects match)');
-      return { x: 0, y: 0, width: containerSize.width, height: containerSize.height };
-    }
-    
-    // Cover mode: camera preview will be scaled to cover the entire container
-    // while maintaining aspect ratio, which means some content may be cropped
-    let previewWidth: number;
-    let previewHeight: number;
-    let previewX: number;
-    let previewY: number;
-    
-    if (photoAspect > containerAspect) {
-      // Photo is wider than container - fit to container height, center horizontally
-      previewHeight = containerSize.height;
-      previewWidth = previewHeight * photoAspect;
-      previewX = (containerSize.width - previewWidth) / 2;
-      previewY = 0;
-      console.log('  → Photo wider than container: fit height, center horizontally');
-    } else {
-      // Photo is taller than container - fit to container width, center vertically  
-      previewWidth = containerSize.width;
-      previewHeight = previewWidth / photoAspect;
-      previewX = 0;
-      previewY = (containerSize.height - previewHeight) / 2;
-      console.log('  → Photo taller than container: fit width, center vertically');
-    }
-    
-    const previewBounds = {
-      x: previewX,
-      y: previewY,
-      width: previewWidth,
-      height: previewHeight
-    };
-    
-    console.log('  → Calculated preview bounds:', previewBounds);
-    return previewBounds;
-  }
+  // Removed complex camera preview bounds calculation in favor of simpler approach
 
   /**
-   * Convert frame coordinates to image coordinates using accurate camera preview mapping
-   * This properly accounts for how React Native Camera scales the preview within the container
+   * SIMPLIFIED: Convert frame coordinates to image coordinates
+   * Using a much simpler approach to avoid coordinate mapping issues
    */
   private static convertFrameToImageCoordinates(
     frameBounds: FrameBounds,
     photoSize: PhotoSize,
     containerSize?: { width: number; height: number }
   ): FrameBounds {
-    console.log('\\n=== Frame to Image Conversion (Camera Preview Aware) ===');
-    console.log('[FrameCropper] Input frame bounds (overlay coords):', frameBounds);
-    console.log('[FrameCropper] Photo size (actual capture):', photoSize);
+    console.log('\\n=== SIMPLIFIED Frame to Image Conversion ===');
+    console.log('[FrameCropper] Input frame bounds:', frameBounds);
+    console.log('[FrameCropper] Photo size:', photoSize);
     
-    // Use provided container size or fall back to screen dimensions
     const container = containerSize || { width: screenWidth, height: screenHeight };
     console.log('[FrameCropper] Container size:', container);
     
-    // Calculate where the camera preview actually sits within the container
-    const previewBounds = this.calculateCameraPreviewBounds(container, photoSize);
+    // Calculate aspect ratios
+    const containerAspect = container.width / container.height;
+    const photoAspect = photoSize.width / photoSize.height;
+    const aspectDiff = Math.abs(containerAspect - photoAspect);
     
-    // Convert frame coordinates from container space to preview space
-    const frameInPreview = {
-      x: frameBounds.x - previewBounds.x,
-      y: frameBounds.y - previewBounds.y,
-      width: frameBounds.width,
-      height: frameBounds.height
-    };
+    console.log('[FrameCropper] Container aspect:', containerAspect.toFixed(3));
+    console.log('[FrameCropper] Photo aspect:', photoAspect.toFixed(3));
+    console.log('[FrameCropper] Aspect difference:', aspectDiff.toFixed(3));
     
-    console.log('[FrameCropper] Frame bounds in preview space:', frameInPreview);
+    let photoX, photoY, photoWidth, photoHeight;
     
-    // Validate that the frame is within the preview bounds
-    if (frameInPreview.x < 0 || frameInPreview.y < 0 || 
-        frameInPreview.x + frameInPreview.width > previewBounds.width ||
-        frameInPreview.y + frameInPreview.height > previewBounds.height) {
-      console.warn('[FrameCropper] ⚠️ Frame extends outside camera preview bounds!');
-      console.warn('  Frame in preview:', frameInPreview);
-      console.warn('  Preview size:', { width: previewBounds.width, height: previewBounds.height });
+    if (aspectDiff > 0.1) {
+      // Significant aspect mismatch - use cover mode scaling
+      console.log('[FrameCropper] Using COVER MODE scaling for aspect mismatch');
+      
+      // Cover mode: scale to fill container, crop excess
+      const scaleToFillWidth = container.width / photoSize.width;
+      const scaleToFillHeight = container.height / photoSize.height;
+      const coverScale = Math.max(scaleToFillWidth, scaleToFillHeight);
+      
+      // Calculate actual rendered preview size
+      const renderedWidth = photoSize.width * coverScale;
+      const renderedHeight = photoSize.height * coverScale;
+      
+      // Calculate centering offset (how much the preview extends beyond container)
+      const offsetX = (renderedWidth - container.width) / 2;
+      const offsetY = (renderedHeight - container.height) / 2;
+      
+      console.log('  Cover scale:', coverScale.toFixed(4));
+      console.log('  Rendered size:', renderedWidth.toFixed(1), '×', renderedHeight.toFixed(1));
+      console.log('  Preview extends beyond container by:', offsetX.toFixed(1), ',', offsetY.toFixed(1));
+      console.log('  Frame adjusted for offset: (' + (frameBounds.x + offsetX).toFixed(1) + ', ' + (frameBounds.y + offsetY).toFixed(1) + ')');
+      
+      // Apply transformation: adjust frame position for the offset, then scale to photo
+      const scaleToPhoto = 1 / coverScale;
+      photoX = (frameBounds.x + offsetX) * scaleToPhoto;
+      photoY = (frameBounds.y + offsetY) * scaleToPhoto;
+      photoWidth = frameBounds.width * scaleToPhoto;
+      photoHeight = frameBounds.height * scaleToPhoto;
+      
+    } else {
+      // Aspects match - use direct scaling
+      console.log('[FrameCropper] Using DIRECT scaling (aspects match)');
+      
+      const scaleX = photoSize.width / container.width;
+      const scaleY = photoSize.height / container.height;
+      
+      photoX = frameBounds.x * scaleX;
+      photoY = frameBounds.y * scaleY;
+      photoWidth = frameBounds.width * scaleX;
+      photoHeight = frameBounds.height * scaleY;
     }
     
-    // Scale from preview coordinates to photo coordinates
-    const scaleX = photoSize.width / previewBounds.width;
-    const scaleY = photoSize.height / previewBounds.height;
+    console.log('[FrameCropper] Calculated photo coords:', {
+      x: photoX.toFixed(1),
+      y: photoY.toFixed(1),
+      width: photoWidth.toFixed(1),
+      height: photoHeight.toFixed(1)
+    });
     
-    console.log('[FrameCropper] Preview to photo scale factors:');
-    console.log('  ScaleX:', scaleX.toFixed(4), '(', photoSize.width, '/', previewBounds.width.toFixed(1), ')');
-    console.log('  ScaleY:', scaleY.toFixed(4), '(', photoSize.height, '/', previewBounds.height.toFixed(1), ')');
-    
-    // Apply scaling to get photo coordinates
-    const photoX = frameInPreview.x * scaleX;
-    const photoY = frameInPreview.y * scaleY;
-    const photoWidth = frameInPreview.width * scaleX;
-    const photoHeight = frameInPreview.height * scaleY;
-    
-    console.log('[FrameCropper] Coordinate mapping:');
-    console.log(`  Container (${frameBounds.x.toFixed(1)}, ${frameBounds.y.toFixed(1)}) -> Preview (${frameInPreview.x.toFixed(1)}, ${frameInPreview.y.toFixed(1)}) -> Photo (${photoX.toFixed(1)}, ${photoY.toFixed(1)})`);
-    console.log(`  Size (${frameBounds.width.toFixed(1)} x ${frameBounds.height.toFixed(1)}) -> Photo (${photoWidth.toFixed(1)} x ${photoHeight.toFixed(1)})`);
-    
-    // Clamp to photo bounds and ensure reasonable dimensions
+    // Clamp and validate
     const finalBounds: FrameBounds = {
       x: Math.max(0, Math.round(photoX)),
       y: Math.max(0, Math.round(photoY)),
@@ -158,20 +124,8 @@ export class FrameCropper {
       height: Math.max(50, Math.min(photoSize.height - Math.max(0, Math.round(photoY)), Math.round(photoHeight))),
     };
     
-    console.log('[FrameCropper] Final clamped bounds:', finalBounds);
-    
-    // Enhanced validation
-    const cropArea = finalBounds.width * finalBounds.height;
-    const photoArea = photoSize.width * photoSize.height;
-    const areaRatio = cropArea / photoArea;
-    
-    console.log('[FrameCropper] Validation:');
-    console.log('  Crop area:', cropArea.toLocaleString(), 'pixels');
-    console.log('  Photo area:', photoArea.toLocaleString(), 'pixels');
-    console.log('  Area ratio:', (areaRatio * 100).toFixed(2), '%');
-    console.log('  Preview bounds:', previewBounds);
-    
-    console.log('=== End Frame Conversion (Camera Preview Aware) ===\\n');
+    console.log('[FrameCropper] Final bounds:', finalBounds);
+    console.log('=== End SIMPLIFIED Frame Conversion ===\\n');
     
     return finalBounds;
   }

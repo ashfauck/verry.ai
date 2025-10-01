@@ -6,13 +6,16 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue, useRecoilState} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
 import {Button} from '../components';
 import {verificationState, verificationProgressSelector, themeState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
+import {isDevelopment} from '../config/environment';
 
 const HomeScreen: React.FC = () => {
+  const navigation = useNavigation();
   const {theme, themeMode, setThemeMode} = useTheme();
   const verification = useRecoilValue(verificationState);
   const progress = useRecoilValue(verificationProgressSelector);
@@ -226,6 +229,18 @@ const HomeScreen: React.FC = () => {
             />
           </View>
         </View>
+
+        {isDevelopment() && (
+          <View style={styles.settingsContainer}>
+            <Text style={styles.settingsTitle}>Developer Tools</Text>
+            <Button
+              title="Environment Configuration"
+              onPress={() => (navigation as any).navigate('EnvironmentInfo')}
+              variant="outline"
+              size="small"
+            />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
