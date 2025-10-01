@@ -14,7 +14,9 @@
     "start:dev": "ENVFILE=.env.development react-native start",
     "start:prod": "ENVFILE=.env.production react-native start",
     "test": "jest",
-    "clean": "react-native clean"
+    "clean": "react-native clean",
+    "commit": "./scripts/auto-commit.sh",
+    "save": "./scripts/auto-commit.sh"
   },
   "dependencies": {
     "@react-native-community/cli": "^13.6.9",
