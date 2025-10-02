@@ -6,9 +6,9 @@ This document explains how to use separate bundle IDs for different environments
 
 The Verry.ai app now supports separate bundle identifiers for each environment:
 
-- **Development**: `com.verryai.app.dev` (Verry Dev)
-- **Staging**: `com.verryai.app.staging` (Verry Staging)
-- **Production**: `com.verryai.app` (Verry)
+- **Development**: `dev.appnoize.verryai` (Verry Dev)
+- **Staging**: `staging.appnoize.verryai` (Verry Staging)
+- **Production**: `com.appnoize.verryai` (Verry)
 
 This allows you to:
 - Test different versions simultaneously on the same device
@@ -29,10 +29,10 @@ The iOS configuration uses xcconfig files located in `ios/Config/`:
 
 Each xcconfig file defines:
 ```
-PRODUCT_BUNDLE_IDENTIFIER = com.verryai.app.{env}
+PRODUCT_BUNDLE_IDENTIFIER = {env}.appnoize.verryai (or com.appnoize.verryai for production)
 DISPLAY_NAME = Verry {Environment}
-ENVIRONMENT = {environment}
-API_URL = https://{env}-api.verry.ai
+APP_ENVIRONMENT = {environment}
+ENVFILE = .env.{environment}
 ```
 
 ### Building for iOS
@@ -57,19 +57,19 @@ Android uses product flavors defined in `android/app/build.gradle`:
 ```gradle
 productFlavors {
     development {
-        applicationId "com.verryai.app.dev"
+        applicationId "dev.appnoize.verryai"
         versionNameSuffix "-dev"
         resValue "string", "app_name", "Verry Dev"
     }
     
     staging {
-        applicationId "com.verryai.app.staging"
+        applicationId "staging.appnoize.verryai"
         versionNameSuffix "-staging"
         resValue "string", "app_name", "Verry Staging"
     }
     
     production {
-        applicationId "com.verryai.app"
+        applicationId "com.appnoize.verryai"
         resValue "string", "app_name", "Verry"
     }
 }
@@ -102,9 +102,9 @@ These files contain environment-specific settings like API URLs, feature flags, 
 
 With separate bundle IDs, you can:
 
-1. Install development version: `com.verryai.app.dev`
-2. Install staging version: `com.verryai.app.staging`
-3. Install production version: `com.verryai.app`
+1. Install development version: `dev.appnoize.verryai`
+2. Install staging version: `staging.appnoize.verryai`
+3. Install production version: `com.appnoize.verryai`
 
 All three versions will appear as separate apps with different names and icons on your device.
 
@@ -113,13 +113,13 @@ All three versions will appear as separate apps with different names and icons o
 ### iOS App Store
 
 - Use the **Production** scheme (`VerryAppProduction`) for App Store builds
-- Bundle ID: `com.verryai.app`
+- Bundle ID: `com.appnoize.verryai`
 - Display Name: "Verry"
 
 ### Google Play Store
 
 - Use the **production** flavor for Play Store builds
-- Application ID: `com.verryai.app`
+- Application ID: `com.appnoize.verryai`
 - App Name: "Verry"
 
 ## Troubleshooting
@@ -135,7 +135,7 @@ All three versions will appear as separate apps with different names and icons o
 You can verify the bundle ID in built apps:
 
 **iOS**: Check in Xcode organizer or device logs
-**Android**: Check with `adb shell dumpsys package com.verryai.app.dev`
+**Android**: Check with `adb shell dumpsys package dev.appnoize.verryai`
 
 ## Next Steps
 
