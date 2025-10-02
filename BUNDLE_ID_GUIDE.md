@@ -127,8 +127,13 @@ All three versions will appear as separate apps with different names and icons o
 ### Common Issues
 
 1. **Bundle ID conflicts**: Make sure you're using the correct scheme/flavor
-2. **Certificate issues**: Ensure your Apple Developer account has the correct bundle IDs registered
+2. **Certificate issues**: Ensure your Apple Developer account has the correct bundle IDs registered  
 3. **Build failures**: Clean builds with `npx react-native clean` if switching between environments
+4. **Schemes not visible in Xcode**: 
+   - Open Xcode: `open ios/VerryApp.xcworkspace`
+   - Go to Product > Scheme > Manage Schemes
+   - Ensure all schemes are checked as "Shared"
+   - If schemes are missing, run `cd ios && pod install` to regenerate them
 
 ### Verifying Bundle IDs
 
