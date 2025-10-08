@@ -37,6 +37,30 @@ export const globalErrorState = atom<string | null>({
   default: null,
 });
 
+// Deep linking and verification ID state
+export const verificationIdState = atom<string | null>({
+  key: 'verificationIdState',
+  default: null,
+});
+
+export const attemptIdState = atom<string | null>({
+  key: 'attemptIdState',
+  default: null,
+});
+
+export const verificationStatusState = atom<{
+  status: 'idle' | 'loading' | 'success' | 'error';
+  hasAttemptId: boolean;
+  error: string | null;
+}>({
+  key: 'verificationStatusState',
+  default: {
+    status: 'idle',
+    hasAttemptId: false,
+    error: null,
+  },
+});
+
 // Selectors for computed values
 export const verificationProgressSelector = selector({
   key: 'verificationProgressSelector',

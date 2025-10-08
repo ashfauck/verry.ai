@@ -1,0 +1,33 @@
+Android App Signing Certificate Fingerprints
+Generated on: Sat Oct  4 01:05:00 IST 2025
+============================================
+
+Development Flavor:
+  Package: dev.appnoize.verry.ai  
+  SHA256: 4D:42:4D:8C:97:62:C6:0C:CC:D2:C3:BD:96:4F:99:85:FA:05:00:77:B3:EB:47:E3:85:5A:2D:94:9E:F9:3F:F8
+  Keystore: /Users/ashfauck/.android/debug.keystore
+
+Staging Flavor:
+  Package: staging.appnoize.verry.ai
+  SHA256: 4D:42:4D:8C:97:62:C6:0C:CC:D2:C3:BD:96:4F:99:85:FA:05:00:77:B3:EB:47:E3:85:5A:2D:94:9E:F9:3F:F8
+  Keystore: /Users/ashfauck/.android/debug.keystore
+
+Production Flavor:
+  Package: com.appnoize.verry.ai
+  SHA256: 07:4C:B1:1C:DB:B8:54:6A:8A:3B:27:EC:6A:19:D0:4A:6B:18:60:4E:E8:AB:E0:6F:ED:7B:09:E3:FC:B5:49:6C
+  Keystore: android/app/verry-release.keystore
+
+Generated Files:
+  - .well-known/assetlinks-dev.json
+  - .well-known/assetlinks-staging.json
+  - .well-known/assetlinks.json (PRODUCTION)
+  - .well-known/assetlinks-all.json
+  - web-assets/assetlinks/assetlinks-development.json
+  - web-assets/assetlinks/assetlinks-staging.json
+  - web-assets/assetlinks/assetlinks-production.json (PRODUCTION)
+
+Security Notes:
+- Production keystore is stored at: android/app/verry-release.keystore
+- Keystore properties saved to: android/keystore.properties
+- Both files added to .gitignore for security
+- Production fingerprint is now different from dev/staging

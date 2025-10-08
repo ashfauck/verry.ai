@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.appnoize.verry.ai",
+      "sha256_cert_fingerprints": [
+        "07:4C:B1:1C:DB:B8:54:6A:8A:3B:27:EC:6A:19:D0:4A:6B:18:60:4E:E8:AB:E0:6F:ED:7B:09:E3:FC:B5:49:6C"
+      ]
+    }
+  }
+]

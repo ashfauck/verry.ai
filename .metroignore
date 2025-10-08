@@ -1,0 +1,53 @@
+# Metro ignore file to prevent watching unnecessary files
+# Documentation and guides
+*.md
+BUILD_*.md
+BUNDLE_*.md
+DEEP_*.md
+DOCUMENT_*.md
+ENVIRONMENT_*.md
+ICONS_*.md
+MULTI_*.md
+PRODUCTION_*.md
+README_*.md
+UNIVERSAL_*.md
+VERIFICATION_*.md
+VISUAL_*.md
+
+# Configuration files
+*.xcconfig
+*.sh
+*.rb
+*.json
+!package.json
+!app.json
+!metro.config.js
+!babel.config.js
+!tsconfig.json
+
+# Build and deployment artifacts
+build/
+scripts/
+docs/
+web-assets/
+TempApp/
+.well-known/
+
+# Test files
+test*.js
+test*.ts
+*test*.html
+
+# Environment and config files
+.env*
+!.env
+
+# Apple and Android specific
+*.aasa
+assetlinks.json
+android-fingerprints.txt
+apple-app-site-association
+
+# Temporary files
+.watchman-cookie*
+yarn.lock

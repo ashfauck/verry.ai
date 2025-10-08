@@ -1,0 +1,32 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "244FRME228.com.appnoize.verry.ai",
+          "244FRME228.staging.appnoize.verry.ai", 
+          "244FRME228.dev.appnoize.verry.ai"
+        ],
+        "components": [
+          {
+            "/": "/verify/*",
+            "comment": "Verification deep links"
+          },
+          {
+            "/": "/verification/*", 
+            "comment": "Alternative verification path"
+          },
+          {
+            "/": "/v/*",
+            "comment": "Short verification path"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "244FRME228.com.appnoize.verry.ai"
+    ]
+  }
+}

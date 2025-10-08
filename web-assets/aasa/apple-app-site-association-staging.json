@@ -1,0 +1,42 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["244FRME228.staging.appnoize.verry.ai"],
+        "components": [
+          {
+            "/": "/verify/*",
+            "comment": "Verification deep links - staging environment"
+          },
+          {
+            "/": "/verification/*", 
+            "comment": "Alternative verification path - staging"
+          },
+          {
+            "/": "/v/*",
+            "comment": "Short verification path - staging"
+          },
+          {
+            "/": "/staging/*",
+            "comment": "Staging-specific deep links"
+          },
+          {
+            "/": "/qa/*",
+            "comment": "QA deep links"
+          },
+          {
+            "/": "/auth/*",
+            "comment": "Authentication URLs for staging environment"
+          },
+          {
+            "/": "/app/*",
+            "comment": "General app URLs for staging environment"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["244FRME228.staging.appnoize.verry.ai"]
+  }
+}

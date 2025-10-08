@@ -1,0 +1,30 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "Z3VKCZH574.com.appnoize.verry.ai"
+        ],
+        "components": [
+          {
+            "/": "/verify/*",
+            "comment": "Verification deep links - test environment"
+          },
+          {
+            "/": "/verification/*", 
+            "comment": "Alternative verification path - test environment"
+          },
+          {
+            "/": "/v/*",
+            "comment": "Short verification path - test environment"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "Z3VKCZH574.com.appnoize.verry.ai"
+    ]
+  }
+}

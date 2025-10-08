@@ -80,3 +80,7 @@ build/
 .idea/
 .gradle/
 /android/app/build/
+# Production Keystore Security
+android/keystore.properties
+*.keystore
+*.jks

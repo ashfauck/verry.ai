@@ -1,0 +1,34 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "Z3VKCZH574.dev.appnoize.verry.ai"
+        ],
+        "components": [
+          {
+            "/": "/verify/*",
+            "comment": "Verification deep links - development environment"
+          },
+          {
+            "/": "/verification/*", 
+            "comment": "Alternative verification path - development"
+          },
+          {
+            "/": "/v/*",
+            "comment": "Short verification path - development"
+          },
+          {
+            "/": "/test/*",
+            "comment": "Test deep links for development"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "Z3VKCZH574.dev.appnoize.verry.ai"
+    ]
+  }
+}

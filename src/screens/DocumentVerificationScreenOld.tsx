@@ -13,27 +13,35 @@ import {
 } from 'react-native';
 import {useRecoilState} from 'recoil';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {
-  Camera,
-  useCameraDevices,
-  useCameraPermission,
-  PhotoFile,
-  TakePhotoOptions,
-  Frame,
-} from 'react-native-vision-camera';
 
-// Conditionally import useFrameProcessor with fallback  
+// Conditionally import VisionCamera components to avoid build errors
+let Camera: any = null;
+let useCameraDevices: any = null;
+let useCameraPermission: any = null;
+let PhotoFile: any = null;
+let TakePhotoOptions: any = null;
+let Frame: any = null;
 let useFrameProcessor: any = null;
+
 try {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const visionCamera = require('react-native-vision-camera');
+  Camera = visionCamera.Camera;
+  useCameraDevices = visionCamera.useCameraDevices;
+  useCameraPermission = visionCamera.useCameraPermission;
+  PhotoFile = visionCamera.PhotoFile;
+  TakePhotoOptions = visionCamera.TakePhotoOptions;
+  Frame = visionCamera.Frame;
   useFrameProcessor = visionCamera.useFrameProcessor;
+  
   if (!useFrameProcessor) {
     console.warn('useFrameProcessor not found in VisionCamera - falling back to null');
   }
 } catch (e) {
-  console.warn('VisionCamera useFrameProcessor not available:', e);
-  useFrameProcessor = null;
+  console.warn('VisionCamera components not available:', e);
+  // Create dummy functions to prevent crashes
+  useCameraDevices = () => [];
+  useCameraPermission = () => ({ hasPermission: false, requestPermission: () => Promise.resolve(false) });
 }
 import {useTheme} from '../components/ThemeProvider';
 import {Button, CropTestOverlay} from '../components';
@@ -85,15 +93,15 @@ const DocumentVerificationScreen: React.FC = () => {
   const stabilityChecker = useRef(new DocumentStabilityChecker());
   const frameStabilityChecker = useRef(new FrameDocumentStabilityChecker());
   const boundingBoxOpacity = useRef(new Animated.Value(0)).current;
-  const cameraRef = useRef<Camera>(null);
+  const cameraRef = useRef<any>(null);
 
   const currentStep = params?.step || 'front';
   const isBackSide = currentStep === 'back';
 
   // Camera setup
-  const devices = useCameraDevices();
-  const device = devices?.find(d => d.position === 'back') || null; // Add null fallback
-  const {hasPermission, requestPermission} = useCameraPermission();
+  const devices = useCameraDevices ? useCameraDevices() : [];
+  const device = devices?.find((d: any) => d.position === 'back') || null;
+  const {hasPermission, requestPermission} = useCameraPermission ? useCameraPermission() : { hasPermission: false, requestPermission: () => Promise.resolve(false) };
 
   useEffect(() => {
     if (!hasPermission) {
@@ -251,8 +259,8 @@ const DocumentVerificationScreen: React.FC = () => {
           return;
         }
 
-        const options: TakePhotoOptions = { flash: 'auto' };
-        const photo: PhotoFile = await cameraRef.current.takePhoto(options);
+        const options: any = { flash: 'auto' };
+        const photo: any = await cameraRef.current.takePhoto(options);
         // VisionCamera provides width/height on PhotoFile
         const photoSize: PhotoSize = { 
           width: (photo as any).width || 1920, 
@@ -636,6 +644,28 @@ const DocumentVerificationScreen: React.FC = () => {
     },
   });
 
+  // Show fallback if VisionCamera is not available
+  if (!Camera || !useCameraDevices || !useCameraPermission) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={[styles.header, { top: 100 }]}>
+          <Text style={[styles.title, { color: theme.colors.textPrimary, textAlign: 'center' }]}>
+            Camera Not Available
+          </Text>
+          <Text style={[styles.subtitle, { color: theme.colors.textSecondary, textAlign: 'center', marginTop: 20 }]}>
+            VisionCamera is not properly configured. Please check your installation.
+          </Text>
+          <View style={{ marginTop: 40 }}>
+            <Button 
+              title="Go Back" 
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Full-screen camera background */}
@@ -652,7 +682,7 @@ const DocumentVerificationScreen: React.FC = () => {
                 console.log('Camera initialized successfully');
                 setIsCameraReady(true);
               }}
-              onError={(error) => {
+              onError={(error: any) => {
                 console.error('Camera error:', error);
                 Alert.alert('Camera Error', `Failed to initialize camera: ${error.message}`);
               }}

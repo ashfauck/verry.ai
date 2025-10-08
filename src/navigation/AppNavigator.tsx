@@ -13,6 +13,7 @@ import FaceVerificationScreen from '@screens/FaceVerificationScreen';
 import OnboardingScreen from '@screens/OnboardingScreen';
 import HomeScreen from '@screens/HomeScreen';
 import EnvironmentInfoScreen from '@screens/EnvironmentInfoScreen';
+import NotFoundScreen from '@screens/NotFoundScreen';
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -40,6 +41,7 @@ export type RootStackParamList = {
   FaceVerification: undefined;
   Home: undefined;
   EnvironmentInfo: undefined;
+  NotFound: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -64,6 +66,7 @@ const AppNavigator: React.FC = () => {
       <Stack.Screen name="FaceVerification" component={FaceVerificationScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="EnvironmentInfo" component={EnvironmentInfoScreen} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} />
     </Stack.Navigator>
   );
 };

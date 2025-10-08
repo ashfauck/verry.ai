@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,16 @@ import {
   ScrollView,
   Dimensions,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useRecoilValue} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
 import {Button} from '../components';
 import {STRINGS} from '../constants/strings';
+import {useVerificationStatus} from '../hooks/useVerificationStatus';
+import {useDeepLinking} from '../hooks/useDeepLinking';
+import {verificationIdState, attemptIdState} from '../store/atoms';
 import type {NavigationProps} from '../types';
 
 const {width: screenWidth} = Dimensions.get('window');
@@ -25,6 +30,12 @@ const OnboardingScreen: React.FC = () => {
   const {theme} = useTheme();
   const navigation = useNavigation<NavigationProps['navigation']>();
   const [currentStep, setCurrentStep] = useState(0);
+  
+  // Verification status and deep linking
+  const verificationId = useRecoilValue(verificationIdState);
+  const attemptId = useRecoilValue(attemptIdState);
+  const {checkVerificationStatus, isLoading, hasError, error} = useVerificationStatus();
+  useDeepLinking(); // Initialize deep linking listener
 
   const onboardingSteps: OnboardingStep[] = [
     {
@@ -44,16 +55,71 @@ const OnboardingScreen: React.FC = () => {
     },
   ];
 
+  // Handle verification status check and navigation
+  const handleVerificationCheck = async () => {
+    if (!verificationId) {
+      // No verification ID from deep link, proceed normally
+      navigation.navigate('EmailVerification');
+      return;
+    }
+
+    // If we have both verification_id and attempt_id from deep link, proceed directly
+    if (verificationId && attemptId) {
+      console.log('Deep link contains both verification_id and attempt_id, proceeding to EmailVerification');
+      navigation.navigate('EmailVerification');
+      return;
+    }
+
+    // If we only have verification_id, check with API
+    try {
+      const result = await checkVerificationStatus(verificationId);
+      
+      if (result.success) {
+        if (result.hasAttemptId) {
+          // API confirms attempt_id exists, proceed to email verification
+          navigation.navigate('EmailVerification');
+        } else {
+          // No attempt_id in API response, go to not found
+          navigation.navigate('NotFound');
+        }
+      } else {
+        // API call failed, show error and go to not found
+        Alert.alert(
+          'Verification Error',
+          result.error || 'Failed to verify the link. Please try again.',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.navigate('NotFound'),
+            },
+          ]
+        );
+      }
+    } catch (error) {
+      // Unexpected error
+      Alert.alert(
+        'Error',
+        'An unexpected error occurred. Please try again.',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('NotFound'),
+          },
+        ]
+      );
+    }
+  };
+
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      navigation.navigate('EmailVerification');
+      handleVerificationCheck();
     }
   };
 
   const handleSkip = () => {
-    navigation.navigate('EmailVerification');
+    handleVerificationCheck();
   };
 
   const styles = StyleSheet.create({
@@ -187,6 +253,8 @@ const OnboardingScreen: React.FC = () => {
           }
           onPress={handleNext}
           fullWidth
+          loading={isLoading}
+          disabled={isLoading}
         />
       </View>
     </SafeAreaView>

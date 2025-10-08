@@ -1,0 +1,42 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["244FRME228.dev.appnoize.verry.ai"],
+        "components": [
+          {
+            "/": "/verify/*",
+            "comment": "Verification deep links - development environment"
+          },
+          {
+            "/": "/verification/*", 
+            "comment": "Alternative verification path - development"
+          },
+          {
+            "/": "/v/*",
+            "comment": "Short verification path - development"
+          },
+          {
+            "/": "/dev/*",
+            "comment": "Development-specific deep links"
+          },
+          {
+            "/": "/test/*",
+            "comment": "Test deep links for development"
+          },
+          {
+            "/": "/auth/*",
+            "comment": "Authentication URLs for development environment"
+          },
+          {
+            "/": "/app/*",
+            "comment": "General app URLs for development environment"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["244FRME228.dev.appnoize.verry.ai"]
+  }
+}
