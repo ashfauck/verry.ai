@@ -1,10 +1,30 @@
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
-/**
- * Metro configuration
- * 
- * @type {import('metro-config').MetroConfig}
- */
-const config = {};
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const path = require('path');
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+const defaultConfig = getDefaultConfig(__dirname);
+
+const config = {
+  server: {
+    port: 8081,
+    enhanceMiddleware: (middleware) => {
+      return (req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return middleware(req, res, next);
+      };
+    },
+  },
+  resolver: {
+    blacklistRE: /.*\/__fixtures__\/.*/,
+  },
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
+      },
+    }),
+  },
+};
+
+module.exports = mergeConfig(defaultConfig, config);

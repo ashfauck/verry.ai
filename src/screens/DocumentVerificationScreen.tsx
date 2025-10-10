@@ -125,19 +125,13 @@ const DocumentVerificationScreen: React.FC = () => {
       } else {
         console.log('[DocumentVerification] Document scan failed or cancelled:', result.error);
         
-        // If scanner is not available, redirect to original camera screen
+        // If scanner is not available, show error message
         if (result.error && result.error.includes('not available')) {
-          console.log('[DocumentVerification] Redirecting to original camera screen');
+          console.log('[DocumentVerification] Document scanner not available');
           Alert.alert(
-            'Use Camera Instead',
-            'Document scanner is not available. Would you like to use the camera instead?',
-            [
-              { text: 'Cancel', style: 'cancel' },
-              { 
-                text: 'Use Camera', 
-                onPress: () => navigation.replace('DocumentVerificationScreenOld', { step: currentStep })
-              }
-            ]
+            'Document Scanner Not Available',
+            'The document scanner is not available on this device. Please try again later.',
+            [{ text: 'OK', style: 'default' }]
           );
           return;
         }
