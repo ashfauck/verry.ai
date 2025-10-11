@@ -95,7 +95,7 @@ const OnboardingScreen: React.FC = () => {
              navigation.navigate('EmailVerification');
              return; 
             } else if (!verificationAttempt.document_scanned) {
-              navigation.navigate('DocumentUpload');
+              navigation.navigate('DocumentCapture');
               return;
             } else if (!verificationAttempt.face_verified) {
               navigation.navigate('FaceVerification');

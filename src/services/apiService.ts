@@ -1,3 +1,65 @@
+// --- Attachment Upload Types ---
+export interface AttachmentUploadRequest {
+  attachments: Array<{
+    file: {
+      uri: string;
+      type: string;
+      name: string;
+    };
+    fileId: string;
+    contentType: string;
+    metadata?: Record<string, any>;
+  }>;
+}
+
+export interface AttachmentUploadResult {
+  fileId: string;
+  attachmentId?: string;
+  fileName?: string;
+  contentType?: string;
+  uploadTime?: string;
+  downloadUrl?: string;
+  thumbnailUrl?: string;
+  metadata?: Record<string, any>;
+  error?: {
+    code: string;
+    message: string;
+  };
+}
+
+export interface AttachmentUploadResponse {
+  results: AttachmentUploadResult[];
+}
+// --- Verify Email Code Types ---
+export interface VerifyEmailCodeRequest {
+  email: string;
+  verificationAttemptId: string;
+  code: string;
+}
+
+export interface VerificationStatus {
+  emailVerified: boolean;
+  currentStage: string;
+  verificationId: string;
+}
+
+export interface VerifyEmailCodeResponse {
+  success: boolean;
+  message: string;
+  nextStep: string;
+  verificationStatus: VerificationStatus;
+}
+// --- Email Verification Types ---
+export interface SendVerificationEmailRequest {
+  email: string;
+  verificationAttemptId: string;
+}
+
+export interface SendVerificationEmailResponse {
+  success: boolean;
+  message: string;
+  emailId: string;
+}
 import environment, {buildApiUrl, shouldLog} from '../config/environment';
 
 export interface ApiResponse<T = any> {
@@ -21,7 +83,7 @@ class ApiService {
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
     const url = buildApiUrl(endpoint);
-    
+  
     if (shouldLog('debug')) {
       console.log(`API Request: ${options.method || 'GET'} ${url}`);
     }
@@ -80,17 +142,74 @@ class ApiService {
   }
 
   // Email Verification
-  async sendVerificationEmail(email: string): Promise<ApiResponse> {
-    return this.makeRequest('/auth/send-verification', {
+  /**
+   * Sends a verification email using the Verry.ai API.
+   * @param email The email address to send verification to.
+   * @param verificationAttemptId The attempt ID for tracking verification.
+   * @returns ApiResponse with success, message, and emailId.
+   */
+  async sendVerificationEmail(
+    req: SendVerificationEmailRequest,
+    apiKey: string = 'ak_39f459c596d049b085071f74',
+    clientId: string = 'cli_4mtqfircysno'
+  ): Promise<ApiResponse<SendVerificationEmailResponse>> {
+    return this.makeRequest<SendVerificationEmailResponse>('send-verification-email', {
       method: 'POST',
-      body: JSON.stringify({ email }),
+      headers: {
+        'x-api-key': apiKey,
+        'x-client-id': clientId,
+      },
+      body: JSON.stringify(req),
     });
   }
 
-  async verifyEmail(email: string, code: string): Promise<ApiResponse> {
-    return this.makeRequest('/auth/verify-email', {
+  /**
+   * Verifies the email code using the Verry.ai API.
+   * @param req The request body containing email, verificationAttemptId, and code.
+   * @param apiKey The API key for authentication.
+   * @param clientId The client ID for authentication.
+   * @returns ApiResponse with success, message, nextStep, and verificationStatus.
+   */
+  async verifyEmailCode(
+    req: VerifyEmailCodeRequest,
+    apiKey: string = 'ak_39f459c596d049b085071f74',
+    clientId: string = 'cli_4mtqfircysno'
+  ): Promise<ApiResponse<VerifyEmailCodeResponse>> {
+    return this.makeRequest<VerifyEmailCodeResponse>('/verify-email-code', {
       method: 'POST',
-      body: JSON.stringify({ email, code }),
+      headers: {
+        'x-api-key': apiKey,
+        'x-client-id': clientId,
+      },
+      body: JSON.stringify(req),
+    });
+  }
+
+  /**
+   * Uploads document images as attachments using FormData.
+   */
+  async uploadAttachments(
+    req: AttachmentUploadRequest,
+    apiKey: string = 'ak_39f459c596d049b085071f74',
+    clientId: string = 'cli_4mtqfircysno'
+  ): Promise<ApiResponse<AttachmentUploadResponse>> {
+    const formData = new FormData();
+    req.attachments.forEach((att, idx) => {
+      formData.append(`attachments[${idx}].file`, att.file);
+      formData.append(`attachments[${idx}].fileId`, att.fileId);
+      formData.append(`attachments[${idx}].contentType`, att.contentType);
+      if (att.metadata) {
+        formData.append(`attachments[${idx}].metadata`, JSON.stringify(att.metadata));
+      }
+    });
+    return this.makeRequest<AttachmentUploadResponse>('attachments/upload', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'x-client-id': clientId,
+        'Accept': 'application/json',
+      },
+      body: formData,
     });
   }
 

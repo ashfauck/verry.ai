@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { apiService } from '../services/apiService';
 import {
   View,
   Text,
@@ -9,11 +10,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../components/ThemeProvider';
 import {Button} from '../components';
-import {verificationState} from '../store/atoms';
+import {attemptIdState, verificationState} from '../store/atoms';
 import {STRINGS, VALIDATION} from '../constants';
 import type {NavigationProps} from '../types';
 
@@ -27,6 +28,7 @@ const EmailVerificationScreen: React.FC = () => {
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(0);
+  const attemptId = useRecoilValue(attemptIdState);
 
   const validateEmail = (emailText: string): boolean => {
     return VALIDATION.email.pattern.test(emailText) && emailText.length <= VALIDATION.email.maxLength;
@@ -44,32 +46,44 @@ const EmailVerificationScreen: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setVerification(prev => ({
-        ...prev,
-        email: email,
-        error: null,
-      }));
-      
-      setIsCodeSent(true);
-      setTimer(60); // Start 60 second timer
-      
-      // Start countdown
-      const interval = setInterval(() => {
-        setTimer(prev => {
-          if (prev <= 1) {
-            clearInterval(interval);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+      // Generate a verificationAttemptId (UUID)
+      // Always use verificationAttemptId from Recoil state, generate/store if missing
+      if (!attemptId) {
+        setVerification(prev => ({
+          ...prev,
+          attemptId,
+        }));
+      }
 
-      Alert.alert(STRINGS.common.success, STRINGS.auth.emailSent);
-    } catch (error) {
-      Alert.alert(STRINGS.common.error, STRINGS.errors.networkError);
+      const response = await apiService.sendVerificationEmail({
+        email,
+        verificationAttemptId: attemptId || '',
+      });
+
+      if (response.success) {
+        setVerification(prev => ({
+          ...prev,
+          email,
+          attemptId,
+          error: null,
+        }));
+        setIsCodeSent(true);
+        setTimer(60); // Start 60 second timer
+        // Start countdown
+        const interval = setInterval(() => {
+          setTimer(prev => {
+            if (prev <= 1) {
+              clearInterval(interval);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      } else {
+        Alert.alert(STRINGS.common.error, response.error || STRINGS.errors.networkError);
+      }
+    } catch (error: any) {
+      Alert.alert(STRINGS.common.error, error.message || STRINGS.errors.networkError);
     } finally {
       setIsLoading(false);
     }
@@ -83,24 +97,26 @@ const EmailVerificationScreen: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      setVerification(prev => ({
-        ...prev,
-        emailVerified: true,
-        currentStep: 'document_front',
-        error: null,
-      }));
+      const response = await apiService.verifyEmailCode({
+        email,
+        code: verificationCode,
+        verificationAttemptId: attemptId || '',
+      });
 
-      Alert.alert(
-        STRINGS.common.success, 
-        STRINGS.auth.emailVerified,
-        [{
-          text: STRINGS.common.continue,
-          onPress: () => navigation.navigate('DocumentCapture')
-        }]
-      );
+      if (response.success) {
+          setVerification(prev => ({
+            ...prev,
+            emailVerified: true,
+            currentStep: 'document_front',
+            error: null,
+          }));
+
+        navigation.navigate('DocumentCapture');
+      } else {
+          Alert.alert(STRINGS.common.error, response.error || STRINGS.errors.networkError);
+      }
+      
     } catch (error) {
       Alert.alert(STRINGS.common.error, STRINGS.errors.networkError);
     } finally {
@@ -227,13 +243,6 @@ const EmailVerificationScreen: React.FC = () => {
             </View>
 
             <View style={styles.skipContainer}>
-              <Button
-                title="Skip for now"
-                onPress={skipEmailVerification}
-                variant="ghost"
-                size="small"
-                disabled={isLoading}
-              />
             </View>
           </>
         ) : (
@@ -283,13 +292,6 @@ const EmailVerificationScreen: React.FC = () => {
             </View>
 
             <View style={styles.skipContainer}>
-              <Button
-                title="Skip for now"
-                onPress={skipEmailVerification}
-                variant="ghost"
-                size="small"
-                disabled={isLoading}
-              />
             </View>
           </>
         )}

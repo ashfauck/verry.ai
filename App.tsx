@@ -6,6 +6,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StyleSheet, Linking} from 'react-native';
 
 import AppNavigator from '@navigation/AppNavigator';
+import SnackbarController from './src/components/SnackbarController';
+import { setSnackbarRef } from './src/components/snackbarService';
 import ThemeProvider from '@components/ThemeProvider';
 import type {RootStackParamList} from '@navigation/AppNavigator';
 import linkingConfig from './src/config/linking';
@@ -94,14 +96,28 @@ function useInstallDocumentProcessor() {
 // };
 
 const App = (): JSX.Element => {
+  // Debug: Show snackbar on app load to verify visibility
+  React.useEffect(() => {
+    setTimeout(() => {
+      // @ts-ignore
+      import('./src/components/snackbarService').then(({ showSnackbar }) => {
+        showSnackbar('Snackbar Test: If you see this, it works!', 'info', 4000);
+      });
+    }, 1000);
+  }, []);
   useInstallDocumentProcessor();
   const navigationRef = React.useRef<NavigationContainerRef<RootStackParamList>>(null);
+  const snackbarRef = React.useRef<any>(null);
+  React.useEffect(() => {
+    setSnackbarRef(snackbarRef);
+  }, []);
 
   return (
     <RecoilRoot>
       <ThemeProvider>
         <SafeAreaProvider>
           <GestureHandlerRootView style={styles.container}>
+            <SnackbarController ref={snackbarRef} />
             <NavigationContainer ref={navigationRef} linking={linkingConfig}>
               {/* {<DeepLinkHandler navigationRef={navigationRef} />} */}
               <AppNavigator />

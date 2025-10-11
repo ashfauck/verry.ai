@@ -34,9 +34,11 @@ class VerificationService {
   private baseUrl: string;
   private apiKey: string;
   private clientId: string;
+  private version: string;
 
   constructor() {
     this.baseUrl = Config.API_BASE_URL || 'https://api.verry.ai';
+    this.version = Config.API_VERSION || 'v1';
     this.apiKey = Config.VERRY_API_KEY || '';
     this.clientId = Config.VERRY_CLIENT_ID || '';
 
@@ -50,7 +52,7 @@ class VerificationService {
 
   async getVerificationStatus(verificationId: string): Promise<VerificationStatusResponse> {
     try {
-      const url = `${this.baseUrl}/functions/v1/verification-status/${verificationId}`;
+      const url = `${this.baseUrl}/${this.version}/verification-status/${verificationId}`;
 
       console.log("URL getVerificationStatus:", url);
       

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { View, Text } from 'react-native';
+import SnackbarController from '../components/SnackbarController';
+import { setSnackbarRef } from '../components/snackbarService';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useRecoilValue} from 'recoil';
 import {isVerificationCompleteSelector} from '@store/atoms';
@@ -26,24 +29,35 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AppNavigator: React.FC = () => {
+  // Test button for snackbar visibility
+  const testSnackbar = () => {
+    // @ts-ignore
+    import('../components/snackbarService').then(({ showSnackbar }) => {
+      showSnackbar('Test Snackbar: If you see this, it works!', 'info');
+    });
+  };
   const isVerificationComplete = useRecoilValue(isVerificationCompleteSelector);
 
   return (
-    <Stack.Navigator
-      initialRouteName={isVerificationComplete ? 'Home' : 'Onboarding'}
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: false,
-      }}>
-      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
-      <Stack.Screen name="DocumentCapture" component={DocumentCaptureScreen} />
-      <Stack.Screen name="DocumentVerification" component={DocumentVerificationScreen} />
-      <Stack.Screen name="FaceVerification" component={FaceVerificationScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="EnvironmentInfo" component={EnvironmentInfoScreen} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} />
-    </Stack.Navigator>
+    <>
+      <React.Fragment>
+        <Stack.Navigator
+          initialRouteName={isVerificationComplete ? 'Home' : 'Onboarding'}
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}>
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
+          <Stack.Screen name="DocumentCapture" component={DocumentCaptureScreen} />
+          <Stack.Screen name="DocumentVerification" component={DocumentVerificationScreen} />
+          <Stack.Screen name="FaceVerification" component={FaceVerificationScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="EnvironmentInfo" component={EnvironmentInfoScreen} />
+          <Stack.Screen name="NotFound" component={NotFoundScreen} />
+        </Stack.Navigator>
+      </React.Fragment>
+    </>
   );
 };
 

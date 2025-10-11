@@ -1,3 +1,6 @@
+import { apiService, AttachmentUploadResult } from '../services/apiService';
+import SnackbarController from '../components/SnackbarController';
+import { setSnackbarRef, showSnackbar } from '../components/snackbarService';
 import React, {useState} from 'react';
 import {
   View,
@@ -107,7 +110,7 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
     );
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!verification.documentFront || !verification.documentBack) {
       Alert.alert(
         'Incomplete',
@@ -116,10 +119,74 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
       );
       return;
     }
-    
-    logger.navigation.navigate('FaceVerification', { documentsCompleted: true });
-    
-    (navigation as any).navigate('FaceVerification');
+
+  showSnackbar('Uploading your document images...', 'info');
+    // Prepare attachments array
+    let attachments = [
+      {
+        file: {
+          uri: verification.documentFront,
+          type: 'image/jpeg',
+          name: 'document_front.jpg',
+        },
+        fileId: 'file_front',
+        contentType: 'image/jpeg',
+        metadata: { caption: 'Front of Document' },
+      },
+      {
+        file: {
+          uri: verification.documentBack,
+          type: 'image/jpeg',
+          name: 'document_back.jpg',
+        },
+        fileId: 'file_back',
+        contentType: 'image/jpeg',
+        metadata: { caption: 'Back of Document' },
+      },
+    ];
+
+    let allUploaded = false;
+    let uploadResults: AttachmentUploadResult[] = [];
+    let maxRetries = 3;
+    let attempt = 0;
+
+    while (!allUploaded && attempt < maxRetries) {
+      try {
+        const response = await apiService.uploadAttachments({ attachments });
+        if (!response.success || !response.data) {
+          showSnackbar(response.error || 'Failed to upload documents.', 'error');
+          return;
+        }
+        uploadResults = response.data.results;
+        const failed = uploadResults.filter(r => r.error);
+        if (failed.length === 0) {
+          allUploaded = true;
+          break;
+        } else {
+          // Only retry failed attachments
+          attachments = attachments.filter(att => failed.some(f => f.fileId === att.fileId));
+          attempt++;
+          if (attempt < maxRetries) {
+            showSnackbar(`Retrying failed uploads (${attempt}/${maxRetries})...`, 'info');
+          } else {
+            showSnackbar(failed.map(r => r.error?.message).join('\n'), 'error');
+            return;
+          }
+        }
+      } catch (error: any) {
+        showSnackbar(error.message || 'Failed to upload documents.', 'error');
+        return;
+      }
+    }
+
+    // All attachments uploaded successfully
+    const fileIds = uploadResults.map(r => r.fileId);
+    logger.info('Document uploaded', fileIds);
+    showSnackbar('Documents uploaded successfully!', 'success');
+    setTimeout(() => {
+      (navigation as any).navigate('FaceVerification');
+    }, 1200);
+  // ...existing code...
   };
 
   const renderDocumentSection = (side: 'front' | 'back') => {
@@ -191,30 +258,30 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
   const canContinue = verification.documentFront && verification.documentBack;
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
-      <View style={styles.header}>
-        <Text style={[styles.title, {color: theme.colors.textPrimary}]}>
-          Document Capture
-        </Text>
-        <Text style={[styles.description, {color: theme.colors.textSecondary}]}>
-          Please capture both sides of your identification document
-        </Text>
-      </View>
+    <View style={[styles.container, {backgroundColor: theme.colors.background}]}> 
+      <View style={styles.header}> 
+        <Text style={[styles.title, {color: theme.colors.textPrimary}]}> 
+          Document Capture 
+        </Text> 
+        <Text style={[styles.description, {color: theme.colors.textSecondary}]}> 
+          Please capture both sides of your identification document 
+        </Text> 
+      </View> 
 
-      <View style={styles.content}>
-        {renderDocumentSection('front')}
-        {renderDocumentSection('back')}
-      </View>
+      <View style={styles.content}> 
+        {renderDocumentSection('front')} 
+        {renderDocumentSection('back')} 
+      </View> 
 
-      <View style={[styles.footer, {paddingBottom: theme.spacing.xl}]}>
-        <Button
-          title="Continue"
-          onPress={handleContinue}
-          disabled={!canContinue}
-          style={styles.continueButton}
-        />
-      </View>
-    </View>
+      <View style={[styles.footer, {paddingBottom: theme.spacing.xl}]}> 
+        <Button 
+          title="Continue" 
+          onPress={handleContinue} 
+          disabled={!canContinue} 
+          style={styles.continueButton} 
+        /> 
+      </View> 
+    </View> 
   );
 };
 
