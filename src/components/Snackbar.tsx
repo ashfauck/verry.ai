@@ -3,7 +3,7 @@ import React from 'react';
 
 interface SnackbarProps {
   message: string;
-  type?: 'error' | 'success' | 'info';
+  type?: 'error' | 'success' | 'info' | 'warning';
   visible: boolean;
 }
 
@@ -15,6 +15,7 @@ const Snackbar: React.FC<SnackbarProps> = ({ message, type = 'info', visible }) 
   if (type === 'error') backgroundColor = '#D32F2F';
   if (type === 'success') backgroundColor = '#388E3C';
   if (type === 'info') backgroundColor = '#1976D2';
+  if (type === 'warning') backgroundColor = '#FFA000';
   const containerStyle = [
     styles.container,
     { paddingTop: topOffset + 16, minHeight: topOffset + 48, backgroundColor }
