@@ -1,13 +1,27 @@
 import Config from 'react-native-config';
 
+export interface VerificationAttempt {
+  id: string;
+  current_stage: string;
+  email_verified: boolean;
+  document_scanned: boolean;
+  face_verified: boolean;
+  overall_status: string;
+  verification_score: number;
+  created_at: string;
+  completed_at?: string;
+}
+
 export interface VerificationStatusResponse {
+  success: boolean;
   verification_id: string;
   status: string;
-  attempt_id?: string[];
+  completion_percentage?: number;
+  next_steps?: any[];
+  customer_data?: Record<string, any>;
+  verification_attempts?: VerificationAttempt[];
   created_at: string;
-  updated_at: string;
-  user_id?: string;
-  metadata?: Record<string, any>;
+  environment?: string;
 }
 
 export interface ApiError {
@@ -26,6 +40,9 @@ class VerificationService {
     this.apiKey = Config.VERRY_API_KEY || '';
     this.clientId = Config.VERRY_CLIENT_ID || '';
 
+    console.log("API KEY", this.apiKey, "Config" , Config.VERRY_API_KEY);
+    console.log("CLIENT ID", this.clientId, "Config" , Config.VERRY_CLIENT_ID);
+
     if (!this.apiKey || !this.clientId) {
       console.warn('Verry.ai API credentials not configured properly');
     }
@@ -34,6 +51,8 @@ class VerificationService {
   async getVerificationStatus(verificationId: string): Promise<VerificationStatusResponse> {
     try {
       const url = `${this.baseUrl}/functions/v1/verification-status/${verificationId}`;
+
+      console.log("URL getVerificationStatus:", url);
       
       const response = await fetch(url, {
         method: 'GET',
@@ -44,6 +63,8 @@ class VerificationService {
         },
       });
 
+      console.log("Response: getVerificationStatus", response);
+      
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw {
@@ -53,8 +74,13 @@ class VerificationService {
         } as ApiError;
       }
 
-      const data = await response.json();
-      return data as VerificationStatusResponse;
+      const data: VerificationStatusResponse = await response.json();      
+
+      console.log("Response: VerificationStatusResponse", data);
+
+      return {
+        ...data
+      };
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('Network')) {
         throw {
@@ -62,13 +88,9 @@ class VerificationService {
           code: 'NETWORK_ERROR',
         } as ApiError;
       }
-      
+
       throw error;
     }
-  }
-
-  hasAttemptId(response: VerificationStatusResponse): boolean {
-    return Array.isArray(response.attempt_id) && response.attempt_id.length > 0;
   }
 }
 

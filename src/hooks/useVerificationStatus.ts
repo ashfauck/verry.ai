@@ -8,7 +8,7 @@ export const useVerificationStatus = () => {
   const [statusState, setStatusState] = useRecoilState(verificationStatusState);
   const setAttemptId = useSetRecoilState(attemptIdState);
 
-  const checkVerificationStatus = useCallback(async (verificationId: string) => {
+  const checkVerificationStatus = useCallback(async (verificationId: string, attemptId: string) => {
     setStatusState(prev => ({
       ...prev,
       status: 'loading',
@@ -17,23 +17,18 @@ export const useVerificationStatus = () => {
 
     try {
       const response = await verificationService.getVerificationStatus(verificationId);
-      const hasAttemptId = verificationService.hasAttemptId(response);
-      
-      // If API response contains attempt_id, store the first one in state
-      if (hasAttemptId && response.attempt_id && response.attempt_id.length > 0) {
-        setAttemptId(response.attempt_id[0]);
-      }
       
       setStatusState({
-        status: 'success',
-        hasAttemptId,
+        status: response.success ? 'success' : 'error',
+        hasAttemptId: response.verification_attempts && response.verification_attempts.filter(a => a.id === attemptId).length > 0 ? true : false,
         error: null,
       });
 
       return {
-        success: true,
-        hasAttemptId,
-        data: response,
+        success: response.success,
+        hasAttemptId: response.verification_attempts && response.verification_attempts.filter(a => a.id === attemptId).length > 0 ? true : false,
+        data: response.success ? response : null,
+        error: response.success ? null : 'Unknown error',
       };
     } catch (error) {
       const apiError = error as ApiError;

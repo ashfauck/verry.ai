@@ -9,7 +9,7 @@ import AppNavigator from '@navigation/AppNavigator';
 import ThemeProvider from '@components/ThemeProvider';
 import type {RootStackParamList} from '@navigation/AppNavigator';
 import linkingConfig from './src/config/linking';
-
+import 'react-native-url-polyfill/auto';
 
 // Lightweight diagnostic to confirm OpenCV + plugin availability at runtime.
 function runDocumentProcessorDiagnostics() {
@@ -64,34 +64,34 @@ function useInstallDocumentProcessor() {
 }
 
 // Deep Link Navigation Component
-const DeepLinkHandler: React.FC<{navigationRef: React.RefObject<NavigationContainerRef<RootStackParamList>>}> = ({navigationRef}) => {
-  useEffect(() => {
-    const handleDeepLink = (url: string) => {
-      console.log('🔗 Received deep link in App.tsx:', url);
+// const DeepLinkHandler: React.FC<{navigationRef: React.RefObject<NavigationContainerRef<RootStackParamList>>}> = ({navigationRef}) => {
+//   useEffect(() => {
+//     const handleDeepLink = (url: string) => {
+//       console.log('🔗 Received deep link in App.tsx:', url);
       
-      // Let the useDeepLinking hook handle the URL parsing and state updates
-      // Navigation will be handled by the onboarding screen logic
-    };
+//       // Let the useDeepLinking hook handle the URL parsing and state updates
+//       // Navigation will be handled by the onboarding screen logic
+//     };
 
-    // Handle app launch via deep link
-    Linking.getInitialURL().then((url) => {
-      if (url) {
-        console.log('📱 App launched via deep link:', url);
-        handleDeepLink(url);
-      }
-    });
+//     // Handle app launch via deep link
+//     Linking.getInitialURL().then((url) => {
+//       if (url) {
+//         console.log('📱 App launched via deep link:', url);
+//         handleDeepLink(url);
+//       }
+//     });
 
-    // Handle deep links while app is running
-    const subscription = Linking.addEventListener('url', ({url}) => {
-      console.log('🔗 Deep link received while app running:', url);
-      handleDeepLink(url);
-    });
+//     // Handle deep links while app is running
+//     const subscription = Linking.addEventListener('url', ({url}) => {
+//       console.log('🔗 Deep link received while app running:', url);
+//       handleDeepLink(url);
+//     });
 
-    return () => subscription?.remove();
-  }, [navigationRef]);
+//     return () => subscription?.remove();
+//   }, [navigationRef]);
 
-  return null;
-};
+//   return null;
+// };
 
 const App = (): JSX.Element => {
   useInstallDocumentProcessor();
@@ -103,7 +103,7 @@ const App = (): JSX.Element => {
         <SafeAreaProvider>
           <GestureHandlerRootView style={styles.container}>
             <NavigationContainer ref={navigationRef} linking={linkingConfig}>
-              <DeepLinkHandler navigationRef={navigationRef} />
+              {/* {<DeepLinkHandler navigationRef={navigationRef} />} */}
               <AppNavigator />
             </NavigationContainer>
           </GestureHandlerRootView>

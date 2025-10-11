@@ -57,53 +57,90 @@ const OnboardingScreen: React.FC = () => {
 
   // Handle verification status check and navigation
   const handleVerificationCheck = async () => {
-    if (!verificationId) {
-      // No verification ID from deep link, proceed normally
-      navigation.navigate('EmailVerification');
-      return;
-    }
+    
 
-    // If we have both verification_id and attempt_id from deep link, proceed directly
-    if (verificationId && attemptId) {
-      console.log('Deep link contains both verification_id and attempt_id, proceeding to EmailVerification');
-      navigation.navigate('EmailVerification');
-      return;
-    }
-
-    // If we only have verification_id, check with API
+    // Always check verification status if verificationId is present
     try {
-      const result = await checkVerificationStatus(verificationId);
-      
+
+      if (!verificationId || !attemptId) {
+        // No verification ID from deep link, do nothing
+        console.log(
+          "No verification ID or attempt ID found in deep link, skipping verification check."
+        );
+        Alert.alert(
+          "Verification Info",
+          "No verification ID or attempt ID found in the link. Please proceed with the verification process manually.",
+          [
+            {
+              text: "OK",
+              onPress: () => {},
+            },
+          ]
+        );
+        return;
+      }
+
+      const result = await checkVerificationStatus(verificationId, attemptId );
+
       if (result.success) {
+        // If attemptId is present in both deep link and API response, match them
+
         if (result.hasAttemptId) {
-          // API confirms attempt_id exists, proceed to email verification
-          navigation.navigate('EmailVerification');
+          const matchingAttempt = result.data?.verification_attempts?.filter(a => a.id === attemptId) || [];
+
+          if (matchingAttempt.length > 0) {
+            const verificationAttempt = matchingAttempt[0];
+
+            if (!verificationAttempt.email_verified) {
+             navigation.navigate('EmailVerification');
+             return; 
+            } else if (!verificationAttempt.document_scanned) {
+              navigation.navigate('DocumentUpload');
+              return;
+            } else if (!verificationAttempt.face_verified) {
+              navigation.navigate('FaceVerification');
+              return;
+            } else {
+              // All steps completed, navigate to Success or Dashboard
+              navigation.navigate('Success');
+              return;
+            }
+          }
         } else {
-          // No attempt_id in API response, go to not found
-          navigation.navigate('NotFound');
+          // Attempt ID mismatch or not found, show alert only
+          Alert.alert(
+            'Verification Error',
+            'Attempt ID does not match or not found. Please try again.',
+            [
+              {
+                text: 'OK',
+                onPress: () => {},
+              },
+            ]
+          );
         }
       } else {
-        // API call failed, show error and go to not found
+        // API call failed, show error only
         Alert.alert(
           'Verification Error',
           result.error || 'Failed to verify the link. Please try again.',
           [
             {
               text: 'OK',
-              onPress: () => navigation.navigate('NotFound'),
+              onPress: () => {},
             },
           ]
         );
       }
     } catch (error) {
-      // Unexpected error
+      // Unexpected error, show alert only
       Alert.alert(
         'Error',
         'An unexpected error occurred. Please try again.',
         [
           {
             text: 'OK',
-            onPress: () => navigation.navigate('NotFound'),
+            onPress: () => {},
           },
         ]
       );
