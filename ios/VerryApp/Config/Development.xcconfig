@@ -1,0 +1,16 @@
+//
+// Development.xcconfig
+// Configuration for Development environment
+//
+
+// Include Pods Debug configuration
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.debug.xcconfig"
+
+// App Display Name
+DISPLAY_NAME = VerryApp Dev
+
+// Bundle Identifier
+PRODUCT_BUNDLE_IDENTIFIER = $(inherited).dev
+
+// Other development-specific settings
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEVELOPMENT=1

@@ -1,0 +1,15 @@
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.qa.release.xcconfig"
+
+//
+// QA.Release.xcconfig
+// Environment-specific settings for QA Release
+//
+
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"
+
+// QA Release Configuration  
+APP_DISPLAY_NAME = VerryApp QA R
+BUNDLE_ID_PREFIX = staging.appnoize
+BUNDLE_ID_SUFFIX = .verry.ai
+CODE_SIGN_ENTITLEMENTS = VerryApp/VerryApp-Staging.entitlements
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) QA=1

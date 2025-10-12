@@ -1,0 +1,17 @@
+//
+// Staging.xcconfig
+// Environment-specific settings for Staging
+//
+
+// Include base Pods configuration  
+#include "Pods/Target Support Files/Pods-HelloWorld/Pods-HelloWorld.release.xcconfig"
+
+// App Display Name
+APP_DISPLAY_NAME = VerryApp Staging
+
+// Bundle Identifier
+BUNDLE_ID_PREFIX = dev.appnoize
+BUNDLE_ID_SUFFIX = .verry.ai
+
+// Other staging-specific settings
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) STAGING=1

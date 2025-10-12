@@ -1,0 +1,15 @@
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.dev.release.xcconfig"
+
+//
+// Development Release.xcconfig
+// Environment-specific settings for Development Release
+//
+
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"
+
+// Development Release Configuration
+APP_DISPLAY_NAME = VerryApp Dev R
+BUNDLE_ID_PREFIX = dev.appnoize
+BUNDLE_ID_SUFFIX = .verry.ai
+CODE_SIGN_ENTITLEMENTS = VerryApp/VerryApp-Development.entitlements
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEVELOPMENT=1

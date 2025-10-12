@@ -1,0 +1,16 @@
+// Staging Environment Configuration
+
+// Bundle Identifier
+PRODUCT_BUNDLE_IDENTIFIER = staging.appnoize.verry.ai
+PRODUCT_NAME = VerryStaging
+
+// Display Name
+DISPLAY_NAME = Verry Staging
+
+// Environment Variables
+ENVIRONMENT = staging
+API_URL = https://staging-api.verry.ai
+ENVFILE = .env.staging
+CODE_SIGN_STYLE = Automatic
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1

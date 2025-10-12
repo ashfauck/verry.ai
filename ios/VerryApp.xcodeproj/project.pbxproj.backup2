@@ -1,0 +1,1431 @@
+// !$*UTF8*$!// !$*UTF8*$!// !$*UTF8*$!
+
+{
+
+	archiveVersion = 1;{{
+
+	classes = {
+
+	};	archiveVersion = 1;	archiveVersion = 1;
+
+	objectVersion = 54;
+
+	objects = {	classes = {	classes = {
+
+
+
+/* Begin PBXBuildFile section */	};	};
+
+		13B07FBC1A68108700A75B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.swift */; };
+
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };	objectVersion = 54;	objectVersion = 54;
+
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+
+		D14819832DC394165F0BE525 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */; };	objects = {	objects = {
+
+		55ED7E786C055EC20E03F4E0 /* libPods-VerryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01D9773E63150CF495A0429 /* libPods-VerryApp.a */; };
+
+/* End PBXBuildFile section */
+
+
+
+/* Begin PBXFileReference section *//* Begin PBXBuildFile section *//* Begin PBXBuildFile section */
+
+		13B07F961A680F5B00A75B9A /* VerryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VerryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+
+		13B07FB01A68108700A75B9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = VerryApp/AppDelegate.swift; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VerryApp/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VerryApp/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VerryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = VerryApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VerryApp/Images.xcassets; sourceTree = "<group>"; };
+
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VerryApp/Info.plist; sourceTree = "<group>"; };		E7D1C6A8AA1FA157F4AD7B75 /* libPods-VerryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8B103819F042D7C870A4E9 /* libPods-VerryApp.a */; };		55ED7E786C055EC20E03F4E0 /* libPods-VerryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01D9773E63150CF495A0429 /* libPods-VerryApp.a */; };
+
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VerryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+
+		FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = VerryApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };/* End PBXBuildFile section */		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+
+		97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.debug.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.debug.xcconfig"; sourceTree = "<group>"; };
+
+		E01D9773E63150CF495A0429 /* libPods-VerryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VerryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+
+		F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.release.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"; sourceTree = "<group>"; };/* Begin PBXFileReference section */		D14819832DC394165F0BE525 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */; };
+
+/* End PBXFileReference section */
+
+		13B07F961A680F5B00A75B9A /* VerryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VerryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };/* End PBXBuildFile section */
+
+/* Begin PBXFrameworksBuildPhase section */
+
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VerryApp/Info.plist; sourceTree = "<group>"; };
+
+			isa = PBXFrameworksBuildPhase;
+
+			buildActionMask = 2147483647;		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = VerryApp/AppDelegate.swift; sourceTree = "<group>"; };/* Begin PBXFileReference section */
+
+			files = (
+
+				55ED7E786C055EC20E03F4E0 /* libPods-VerryApp.a in Frameworks */,		97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.debug.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.debug.xcconfig"; sourceTree = "<group>"; };		13B07F961A680F5B00A75B9A /* VerryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VerryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+
+			);
+
+			runOnlyForDeploymentPostprocessing = 0;		9B8B103819F042D7C870A4E9 /* libPods-VerryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VerryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VerryApp/Images.xcassets; sourceTree = "<group>"; };
+
+		};
+
+/* End PBXFrameworksBuildPhase section */		AAF1A7212681DDCE00B0DD8C /* Pods-VerryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.release.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"; sourceTree = "<group>"; };		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VerryApp/Info.plist; sourceTree = "<group>"; };
+
+
+
+/* Begin PBXGroup section */		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = VerryApp/AppDelegate.swift; sourceTree = "<group>"; };
+
+		13B07FAE1A68108700A75B9A /* VerryApp */ = {
+
+			isa = PBXGroup;/* End PBXFileReference section */		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VerryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+
+			children = (
+
+				13B07FB01A68108700A75B9A /* AppDelegate.swift */,		97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.debug.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.debug.xcconfig"; sourceTree = "<group>"; };
+
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+
+				13B07FB61A68108700A75B9A /* Info.plist */,/* Begin PBXFrameworksBuildPhase section */		E01D9773E63150CF495A0429 /* libPods-VerryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VerryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+
+				FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */,		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+
+			);
+
+			name = VerryApp;			isa = PBXFrameworksBuildPhase;		F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerryApp.release.xcconfig"; path = "Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"; sourceTree = "<group>"; };
+
+			sourceTree = "<group>";
+
+		};			buildActionMask = 2147483647;		FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = VerryApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+
+			isa = PBXGroup;			files = (/* End PBXFileReference section */
+
+			children = (
+
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,				E7D1C6A8AA1FA157F4AD7B75 /* libPods-VerryApp.a in Frameworks */,
+
+				E01D9773E63150CF495A0429 /* libPods-VerryApp.a */,
+
+			);			);/* Begin PBXFrameworksBuildPhase section */
+
+			name = Frameworks;
+
+			sourceTree = "<group>";			runOnlyForDeploymentPostprocessing = 0;		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+
+		};
+
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {		};			isa = PBXFrameworksBuildPhase;
+
+			isa = PBXGroup;
+
+			children = (/* End PBXFrameworksBuildPhase section */			buildActionMask = 2147483647;
+
+			);
+
+			name = Libraries;			files = (
+
+			sourceTree = "<group>";
+
+		};/* Begin PBXGroup section */				55ED7E786C055EC20E03F4E0 /* libPods-VerryApp.a in Frameworks */,
+
+		83CBB9F61A601CBA00E9B192 = {
+
+			isa = PBXGroup;		13B07FAE1A68108700A75B9A /* VerryApp */ = {			);
+
+			children = (
+
+				13B07FAE1A68108700A75B9A /* VerryApp */,			isa = PBXGroup;			runOnlyForDeploymentPostprocessing = 0;
+
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+
+				83CBBA001A601CBA00E9B192 /* Products */,			children = (		};
+
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+
+				BBD78D7AC51CEA395F1C20DB /* Pods */,				761780EC2CA45674006654EE /* AppDelegate.swift */,/* End PBXFrameworksBuildPhase section */
+
+			);
+
+			indentWidth = 2;				13B07FB61A68108700A75B9A /* Info.plist */,
+
+			sourceTree = "<group>";
+
+			tabWidth = 2;			);/* Begin PBXGroup section */
+
+			usesTabs = 0;
+
+		};			name = VerryApp;		13B07FAE1A68108700A75B9A /* VerryApp */ = {
+
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+
+			isa = PBXGroup;			sourceTree = "<group>";			isa = PBXGroup;
+
+			children = (
+
+				13B07F961A680F5B00A75B9A /* VerryApp.app */,		};			children = (
+
+			);
+
+			name = Products;		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {				13B07FB51A68108700A75B9A /* Images.xcassets */,
+
+			sourceTree = "<group>";
+
+		};			isa = PBXGroup;				761780EC2CA45674006654EE /* AppDelegate.swift */,
+
+		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
+
+			isa = PBXGroup;			children = (				13B07FB61A68108700A75B9A /* Info.plist */,
+
+			children = (
+
+				97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */,				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+
+				F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */,
+
+			);				9B8B103819F042D7C870A4E9 /* libPods-VerryApp.a */,				FC48C0BC6AF25B194E0549BA /* PrivacyInfo.xcprivacy */,
+
+			path = Pods;
+
+			sourceTree = "<group>";			);			);
+
+		};
+
+/* End PBXGroup section */			name = Frameworks;			name = VerryApp;
+
+
+
+/* Begin PBXNativeTarget section */			sourceTree = "<group>";			sourceTree = "<group>";
+
+		13B07F861A680F5B00A75B9A /* VerryApp */ = {
+
+			isa = PBXNativeTarget;		};		};
+
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */;
+
+			buildPhases = (		832341AE1AAA6A7D00B99B32 /* Libraries */ = {		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+
+				7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */,
+
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,			isa = PBXGroup;			isa = PBXGroup;
+
+				13B07F871A680F5B00A75B9A /* Sources */,
+
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,			children = (			children = (
+
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+
+				AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */,			);				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+
+			);
+
+			buildRules = (			name = Libraries;				E01D9773E63150CF495A0429 /* libPods-VerryApp.a */,
+
+			);
+
+			dependencies = (			sourceTree = "<group>";			);
+
+			);
+
+			name = VerryApp;		};			name = Frameworks;
+
+			productName = VerryApp;
+
+			productReference = 13B07F961A680F5B00A75B9A /* VerryApp.app */;		83CBB9F61A601CBA00E9B192 = {			sourceTree = "<group>";
+
+			productType = "com.apple.product-type.application";
+
+		};			isa = PBXGroup;		};
+
+/* End PBXNativeTarget section */
+
+			children = (		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+
+/* Begin PBXProject section */
+
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {				13B07FAE1A68108700A75B9A /* VerryApp */,			isa = PBXGroup;
+
+			isa = PBXProject;
+
+			attributes = {				832341AE1AAA6A7D00B99B32 /* Libraries */,			children = (
+
+				LastUpgradeCheck = 1210;
+
+				TargetAttributes = {				83CBBA001A601CBA00E9B192 /* Products */,			);
+
+					13B07F861A680F5B00A75B9A = {
+
+						LastSwiftMigration = 1120;				2D16E6871FA4F8E400B85C8A /* Frameworks */,			name = Libraries;
+
+						DevelopmentTeam = Z3VKCZH574;
+
+					};				BBD78D7AC51CEA395F1C20DB /* Pods */,			sourceTree = "<group>";
+
+				};
+
+			};			);		};
+
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */;
+
+			compatibilityVersion = "Xcode 12.0";			indentWidth = 2;		83CBB9F61A601CBA00E9B192 = {
+
+			developmentRegion = en;
+
+			hasScannedForEncodings = 0;			sourceTree = "<group>";			isa = PBXGroup;
+
+			knownRegions = (
+
+				en,			tabWidth = 2;			children = (
+
+				Base,
+
+			);			usesTabs = 0;				13B07FAE1A68108700A75B9A /* VerryApp */,
+
+			mainGroup = 83CBB9F61A601CBA00E9B192;
+
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;		};				832341AE1AAA6A7D00B99B32 /* Libraries */,
+
+			projectDirPath = "";
+
+			projectRoot = "";		83CBBA001A601CBA00E9B192 /* Products */ = {				83CBBA001A601CBA00E9B192 /* Products */,
+
+			targets = (
+
+				13B07F861A680F5B00A75B9A /* VerryApp */,			isa = PBXGroup;				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+
+			);
+
+		};			children = (				BBD78D7AC51CEA395F1C20DB /* Pods */,
+
+/* End PBXProject section */
+
+				13B07F961A680F5B00A75B9A /* VerryApp.app */,			);
+
+/* Begin PBXResourcesBuildPhase section */
+
+		13B07F8E1A680F5B00A75B9A /* Resources */ = {			);			indentWidth = 2;
+
+			isa = PBXResourcesBuildPhase;
+
+			buildActionMask = 2147483647;			name = Products;			sourceTree = "<group>";
+
+			files = (
+
+				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,			sourceTree = "<group>";			tabWidth = 2;
+
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+
+				D14819832DC394165F0BE525 /* PrivacyInfo.xcprivacy in Resources */,		};			usesTabs = 0;
+
+			);
+
+			runOnlyForDeploymentPostprocessing = 0;		BBD78D7AC51CEA395F1C20DB /* Pods */ = {		};
+
+		};
+
+/* End PBXResourcesBuildPhase section */			isa = PBXGroup;		83CBBA001A601CBA00E9B192 /* Products */ = {
+
+
+
+/* Begin PBXShellScriptBuildPhase section */			children = (			isa = PBXGroup;
+
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+
+			isa = PBXShellScriptBuildPhase;				97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */,			children = (
+
+			buildActionMask = 2147483647;
+
+			files = (				AAF1A7212681DDCE00B0DD8C /* Pods-VerryApp.release.xcconfig */,				13B07F961A680F5B00A75B9A /* VerryApp.app */,
+
+			);
+
+			inputPaths = (			);			);
+
+				"$(SRCROOT)/.xcode.env.local",
+
+				"$(SRCROOT)/.xcode.env",			path = Pods;			name = Products;
+
+			);
+
+			name = "Bundle React Native code and images";			sourceTree = "<group>";			sourceTree = "<group>";
+
+			outputPaths = (
+
+			);		};		};
+
+			runOnlyForDeploymentPostprocessing = 0;
+
+			shellPath = /bin/sh;/* End PBXGroup section */		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
+
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+
+		};			isa = PBXGroup;
+
+		7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */ = {
+
+			isa = PBXShellScriptBuildPhase;/* Begin PBXNativeTarget section */			children = (
+
+			buildActionMask = 2147483647;
+
+			files = (		13B07F861A680F5B00A75B9A /* VerryApp */ = {				97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */,
+
+			);
+
+			inputFileListPaths = (			isa = PBXNativeTarget;				F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */,
+
+			);
+
+			inputPaths = (			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */;			);
+
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+
+				"${PODS_ROOT}/Manifest.lock",			buildPhases = (			path = Pods;
+
+			);
+
+			name = "[CP] Check Pods Manifest.lock";				7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */,			sourceTree = "<group>";
+
+			outputFileListPaths = (
+
+			);				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,		};
+
+			outputPaths = (
+
+				"$(DERIVED_FILE_DIR)/Pods-VerryApp-checkManifestLockResult.txt",				13B07F871A680F5B00A75B9A /* Sources */,/* End PBXGroup section */
+
+			);
+
+			runOnlyForDeploymentPostprocessing = 0;				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+
+			shellPath = /bin/sh;
+
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";				AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */,/* Begin PBXNativeTarget section */
+
+			showEnvVarsInLog = 0;
+
+		};			);		13B07F861A680F5B00A75B9A /* VerryApp */ = {
+
+		AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */ = {
+
+			isa = PBXShellScriptBuildPhase;			buildRules = (			isa = PBXNativeTarget;
+
+			buildActionMask = 2147483647;
+
+			files = (			);			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */;
+
+			);
+
+			inputFileListPaths = (			dependencies = (			buildPhases = (
+
+				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+
+			);			);				7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */,
+
+			name = "[CP] Copy Pods Resources";
+
+			outputFileListPaths = (			name = VerryApp;				13B07F871A680F5B00A75B9A /* Sources */,
+
+				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+
+			);			productName = VerryApp;				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+
+			runOnlyForDeploymentPostprocessing = 0;
+
+			shellPath = /bin/sh;			productReference = 13B07F961A680F5B00A75B9A /* VerryApp.app */;				13B07F8E1A680F5B00A75B9A /* Resources */,
+
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources.sh\"\n";
+
+			showEnvVarsInLog = 0;			productType = "com.apple.product-type.application";				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+
+		};
+
+/* End PBXShellScriptBuildPhase section */		};				AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */,
+
+
+
+/* Begin PBXSourcesBuildPhase section *//* End PBXNativeTarget section */			);
+
+		13B07F871A680F5B00A75B9A /* Sources */ = {
+
+			isa = PBXSourcesBuildPhase;			buildRules = (
+
+			buildActionMask = 2147483647;
+
+			files = (/* Begin PBXProject section */			);
+
+				13B07FBC1A68108700A75B9A /* AppDelegate.swift in Sources */,
+
+			);		83CBB9F71A601CBA00E9B192 /* Project object */ = {			dependencies = (
+
+			runOnlyForDeploymentPostprocessing = 0;
+
+		};			isa = PBXProject;			);
+
+/* End PBXSourcesBuildPhase section */
+
+			attributes = {			name = VerryApp;
+
+/* Begin XCBuildConfiguration section */
+
+		13B07F941A680F5B00A75B9A /* Debug */ = {				LastUpgradeCheck = 1210;			productName = VerryApp;
+
+			isa = XCBuildConfiguration;
+
+			baseConfigurationReference = 97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */;				TargetAttributes = {			productReference = 13B07F961A680F5B00A75B9A /* VerryApp.app */;
+
+			buildSettings = {
+
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;					13B07F861A680F5B00A75B9A = {			productType = "com.apple.product-type.application";
+
+				CLANG_ENABLE_MODULES = YES;
+
+				CURRENT_PROJECT_VERSION = 1;						LastSwiftMigration = 1120;		};
+
+				DEVELOPMENT_TEAM = Z3VKCZH574;
+
+				ENABLE_BITCODE = NO;					};/* End PBXNativeTarget section */
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+
+				HERMES_CLI_PATH = "";				};
+
+				INFOPLIST_FILE = VerryApp/Info.plist;
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;			};/* Begin PBXProject section */
+
+				LD_RUNPATH_SEARCH_PATHS = (
+
+					"$(inherited)",			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */;		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+
+					"@executable_path/Frameworks",
+
+				);			compatibilityVersion = "Xcode 12.0";			isa = PBXProject;
+
+				MARKETING_VERSION = 1.0;
+
+				OTHER_LDFLAGS = (			developmentRegion = en;			attributes = {
+
+					"$(inherited)",
+
+					"-ObjC",			hasScannedForEncodings = 0;				BuildIndependentTargetsInParallel = YES;
+
+					"-lc++",
+
+				);			knownRegions = (				LastUpgradeCheck = 2600;
+
+				PRODUCT_BUNDLE_IDENTIFIER = dev.appnoize.verryai;
+
+				PRODUCT_NAME = VerryApp;				en,				TargetAttributes = {
+
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+
+				SWIFT_VERSION = 5.0;				Base,					13B07F861A680F5B00A75B9A = {
+
+				VERSIONING_SYSTEM = "apple-generic";
+
+			};			);						LastSwiftMigration = 1120;
+
+			name = Debug;
+
+		};			mainGroup = 83CBB9F61A601CBA00E9B192;					};
+
+		13B07F951A680F5B00A75B9A /* Release */ = {
+
+			isa = XCBuildConfiguration;			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;				};
+
+			baseConfigurationReference = F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */;
+
+			buildSettings = {			projectDirPath = "";			};
+
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+
+				CLANG_ENABLE_MODULES = YES;			projectRoot = "";			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */;
+
+				CURRENT_PROJECT_VERSION = 1;
+
+				DEVELOPMENT_TEAM = Z3VKCZH574;			targets = (			compatibilityVersion = "Xcode 12.0";
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+
+				HERMES_CLI_PATH = "";				13B07F861A680F5B00A75B9A /* VerryApp */,			developmentRegion = en;
+
+				INFOPLIST_FILE = VerryApp/Info.plist;
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;			);			hasScannedForEncodings = 0;
+
+				LD_RUNPATH_SEARCH_PATHS = (
+
+					"$(inherited)",		};			knownRegions = (
+
+					"@executable_path/Frameworks",
+
+				);/* End PBXProject section */				en,
+
+				MARKETING_VERSION = 1.0;
+
+				OTHER_LDFLAGS = (				Base,
+
+					"$(inherited)",
+
+					"-ObjC",/* Begin PBXShellScriptBuildPhase section */			);
+
+					"-lc++",
+
+				);		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {			mainGroup = 83CBB9F61A601CBA00E9B192;
+
+				PRODUCT_BUNDLE_IDENTIFIER = com.appnoize.verryai;
+
+				PRODUCT_NAME = VerryApp;			isa = PBXShellScriptBuildPhase;			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+
+				SWIFT_VERSION = 5.0;
+
+				VERSIONING_SYSTEM = "apple-generic";			buildActionMask = 2147483647;			projectDirPath = "";
+
+			};
+
+			name = Release;			files = (			projectRoot = "";
+
+		};
+
+		83CBBA201A601CBA00E9B192 /* Debug */ = {			);			targets = (
+
+			isa = XCBuildConfiguration;
+
+			buildSettings = {			inputPaths = (				13B07F861A680F5B00A75B9A /* VerryApp */,
+
+				ALWAYS_SEARCH_USER_PATHS = NO;
+
+				CC = "";				"$(SRCROOT)/.xcode.env.local",			);
+
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";				"$(SRCROOT)/.xcode.env",		};
+
+				CLANG_CXX_LIBRARY = "libc++";
+
+				CLANG_ENABLE_MODULES = YES;			);/* End PBXProject section */
+
+				CLANG_ENABLE_OBJC_ARC = YES;
+
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;			name = "Bundle React Native code and images";
+
+				CLANG_WARN_BOOL_CONVERSION = YES;
+
+				CLANG_WARN_COMMA = YES;			outputPaths = (/* Begin PBXResourcesBuildPhase section */
+
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;			);		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+
+				CLANG_WARN_EMPTY_BODY = YES;			runOnlyForDeploymentPostprocessing = 0;			isa = PBXResourcesBuildPhase;
+
+				CLANG_WARN_ENUM_CONVERSION = YES;
+
+				CLANG_WARN_INFINITE_RECURSION = YES;			shellPath = /bin/sh;			buildActionMask = 2147483647;
+
+				CLANG_WARN_INT_CONVERSION = YES;
+
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";			files = (
+
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;		};				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;		7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */ = {				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+
+				CLANG_WARN_STRICT_PROTOTYPES = YES;			isa = PBXShellScriptBuildPhase;				D14819832DC394165F0BE525 /* PrivacyInfo.xcprivacy in Resources */,
+
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+
+				CLANG_WARN_UNREACHABLE_CODE = YES;			buildActionMask = 2147483647;			);
+
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";			files = (			runOnlyForDeploymentPostprocessing = 0;
+
+				COPY_PHASE_STRIP = NO;
+
+				CXX = "";			);		};
+
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+
+				ENABLE_TESTABILITY = YES;			inputFileListPaths = (/* End PBXResourcesBuildPhase section */
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+
+				GCC_C_LANGUAGE_STANDARD = gnu99;			);
+
+				GCC_DYNAMIC_NO_PIC = NO;
+
+				GCC_NO_COMMON_BLOCKS = YES;			inputPaths = (/* Begin PBXShellScriptBuildPhase section */
+
+				GCC_OPTIMIZATION_LEVEL = 0;
+
+				GCC_PREPROCESSOR_DEFINITIONS = (				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+
+					"DEBUG=1",
+
+					"$(inherited)",				"${PODS_ROOT}/Manifest.lock",			isa = PBXShellScriptBuildPhase;
+
+				);
+
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;			);			buildActionMask = 2147483647;
+
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;			name = "[CP] Check Pods Manifest.lock";			files = (
+
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;			outputFileListPaths = (			);
+
+				GCC_WARN_UNUSED_FUNCTION = YES;
+
+				GCC_WARN_UNUSED_VARIABLE = YES;			);			inputPaths = (
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+
+				LD = "";			outputPaths = (				"$(SRCROOT)/.xcode.env.local",
+
+				LDPLUSPLUS = "";
+
+				LD_RUNPATH_SEARCH_PATHS = (				"$(DERIVED_FILE_DIR)/Pods-VerryApp-checkManifestLockResult.txt",				"$(SRCROOT)/.xcode.env",
+
+					/usr/lib/swift,
+
+					"$(inherited)",			);			);
+
+				);
+
+				LIBRARY_SEARCH_PATHS = (			runOnlyForDeploymentPostprocessing = 0;			name = "Bundle React Native code and images";
+
+					"\"$(SDKROOT)/usr/lib/swift\"",
+
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",			shellPath = /bin/sh;			outputPaths = (
+
+					"\"$(inherited)\"",
+
+				);			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";			);
+
+				MTL_ENABLE_DEBUG_INFO = YES;
+
+				ONLY_ACTIVE_ARCH = YES;			showEnvVarsInLog = 0;			runOnlyForDeploymentPostprocessing = 0;
+
+				OTHER_CPLUSPLUSFLAGS = (
+
+					"$(OTHER_CFLAGS)",		};			shellPath = /bin/sh;
+
+					"-DFOLLY_NO_CONFIG",
+
+					"-DFOLLY_MOBILE=1",		AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */ = {			shellScript = "export SKIP_BUNDLING=true\necho \"Bundling skipped due to sandbox restrictions\"\n";
+
+					"-DFOLLY_USE_LIBCPP=1",
+
+					"-DFOLLY_CFG_NO_COROUTINES=1",			isa = PBXShellScriptBuildPhase;		};
+
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
+
+				);			buildActionMask = 2147483647;		7B9304E4BB3457B40E55D457 /* [CP] Check Pods Manifest.lock */ = {
+
+				OTHER_LDFLAGS = (
+
+					"$(inherited)",			files = (			isa = PBXShellScriptBuildPhase;
+
+					" ",
+
+				);			);			buildActionMask = 2147483647;
+
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
+
+				SDKROOT = iphoneos;			inputFileListPaths = (			files = (
+
+				USE_HERMES = false;
+
+			};				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-input-files.xcfilelist",			);
+
+			name = Debug;
+
+		};			);			inputFileListPaths = (
+
+		83CBBA211A601CBA00E9B192 /* Release */ = {
+
+			isa = XCBuildConfiguration;			name = "[CP] Copy Pods Resources";			);
+
+			buildSettings = {
+
+				ALWAYS_SEARCH_USER_PATHS = NO;			outputFileListPaths = (			inputPaths = (
+
+				CC = "";
+
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-output-files.xcfilelist",				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+
+				CLANG_CXX_LIBRARY = "libc++";			);				"${PODS_ROOT}/Manifest.lock",
+
+				CLANG_ENABLE_MODULES = YES;
+
+				CLANG_ENABLE_OBJC_ARC = YES;			runOnlyForDeploymentPostprocessing = 0;			);
+
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+
+				CLANG_WARN_BOOL_CONVERSION = YES;			shellPath = /bin/sh;			name = "[CP] Check Pods Manifest.lock";
+
+				CLANG_WARN_COMMA = YES;
+
+				CLANG_WARN_CONSTANT_CONVERSION = YES;			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources.sh\"\n";			outputFileListPaths = (
+
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;			showEnvVarsInLog = 0;			);
+
+				CLANG_WARN_EMPTY_BODY = YES;
+
+				CLANG_WARN_ENUM_CONVERSION = YES;		};			outputPaths = (
+
+				CLANG_WARN_INFINITE_RECURSION = YES;
+
+				CLANG_WARN_INT_CONVERSION = YES;/* End PBXShellScriptBuildPhase section */				"$(DERIVED_FILE_DIR)/Pods-VerryApp-checkManifestLockResult.txt",
+
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;			);
+
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;/* Begin PBXSourcesBuildPhase section */			runOnlyForDeploymentPostprocessing = 0;
+
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;		13B07F871A680F5B00A75B9A /* Sources */ = {			shellPath = /bin/sh;
+
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;			isa = PBXSourcesBuildPhase;			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;			buildActionMask = 2147483647;			showEnvVarsInLog = 0;
+
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+
+				COPY_PHASE_STRIP = YES;			files = (		};
+
+				CXX = "";
+
+				ENABLE_NS_ASSERTIONS = NO;				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,		AE0DA9F527EBC49EC8B0301C /* [CP] Copy Pods Resources */ = {
+
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";			);			isa = PBXShellScriptBuildPhase;
+
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+
+				GCC_NO_COMMON_BLOCKS = YES;			runOnlyForDeploymentPostprocessing = 0;			buildActionMask = 2147483647;
+
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;		};			files = (
+
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;/* End PBXSourcesBuildPhase section */			);
+
+				GCC_WARN_UNUSED_FUNCTION = YES;
+
+				GCC_WARN_UNUSED_VARIABLE = YES;			inputFileListPaths = (
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+
+				LD = "";/* Begin XCBuildConfiguration section */				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+
+				LDPLUSPLUS = "";
+
+				LD_RUNPATH_SEARCH_PATHS = (		13B07F941A680F5B00A75B9A /* Debug */ = {			);
+
+					/usr/lib/swift,
+
+					"$(inherited)",			isa = XCBuildConfiguration;			name = "[CP] Copy Pods Resources";
+
+				);
+
+				LIBRARY_SEARCH_PATHS = (			baseConfigurationReference = 97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */;			outputFileListPaths = (
+
+					"\"$(SDKROOT)/usr/lib/swift\"",
+
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",			buildSettings = {				"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+
+					"\"$(inherited)\"",
+
+				);				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;			);
+
+				MTL_ENABLE_DEBUG_INFO = NO;
+
+				OTHER_CPLUSPLUSFLAGS = (				CLANG_ENABLE_MODULES = YES;			runOnlyForDeploymentPostprocessing = 0;
+
+					"$(OTHER_CFLAGS)",
+
+					"-DFOLLY_NO_CONFIG",				CURRENT_PROJECT_VERSION = 1;			shellPath = /bin/sh;
+
+					"-DFOLLY_MOBILE=1",
+
+					"-DFOLLY_USE_LIBCPP=1",				DEVELOPMENT_TEAM = Z3VKCZH574;			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VerryApp/Pods-VerryApp-resources.sh\"\n";
+
+					"-DFOLLY_CFG_NO_COROUTINES=1",
+
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",				ENABLE_BITCODE = NO;			showEnvVarsInLog = 0;
+
+				);
+
+				OTHER_LDFLAGS = (				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";		};
+
+					"$(inherited)",
+
+					" ",				HERMES_CLI_PATH = "";/* End PBXShellScriptBuildPhase section */
+
+				);
+
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";				INFOPLIST_FILE = VerryApp/Info.plist;
+
+				SDKROOT = iphoneos;
+
+				USE_HERMES = false;				IPHONEOS_DEPLOYMENT_TARGET = 13.4;/* Begin PBXSourcesBuildPhase section */
+
+				VALIDATE_PRODUCT = YES;
+
+			};				LD_RUNPATH_SEARCH_PATHS = (		13B07F871A680F5B00A75B9A /* Sources */ = {
+
+			name = Release;
+
+		};					"$(inherited)",			isa = PBXSourcesBuildPhase;
+
+/* End XCBuildConfiguration section */
+
+					"@executable_path/Frameworks",			buildActionMask = 2147483647;
+
+/* Begin XCConfigurationList section */
+
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */ = {				);			files = (
+
+			isa = XCConfigurationList;
+
+			buildConfigurations = (				MARKETING_VERSION = 1.0;				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+
+				13B07F941A680F5B00A75B9A /* Debug */,
+
+				13B07F951A680F5B00A75B9A /* Release */,				OTHER_LDFLAGS = (			);
+
+			);
+
+			defaultConfigurationIsVisible = 0;					"$(inherited)",			runOnlyForDeploymentPostprocessing = 0;
+
+			defaultConfigurationName = Release;
+
+		};					"-ObjC",		};
+
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */ = {
+
+			isa = XCConfigurationList;					"-lc++",/* End PBXSourcesBuildPhase section */
+
+			buildConfigurations = (
+
+				83CBBA201A601CBA00E9B192 /* Debug */,				);
+
+				83CBBA211A601CBA00E9B192 /* Release */,
+
+			);				PRODUCT_BUNDLE_IDENTIFIER = dev.appnoize.verryai;/* Begin XCBuildConfiguration section */
+
+			defaultConfigurationIsVisible = 0;
+
+			defaultConfigurationName = Release;				PRODUCT_NAME = VerryApp;		13B07F941A680F5B00A75B9A /* Debug */ = {
+
+		};
+
+/* End XCConfigurationList section */				SWIFT_OPTIMIZATION_LEVEL = "-Onone";			isa = XCBuildConfiguration;
+
+	};
+
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;				SWIFT_VERSION = 5.0;			baseConfigurationReference = 97AC07F478136447D888C289 /* Pods-VerryApp.debug.xcconfig */;
+
+}
+				VERSIONING_SYSTEM = "apple-generic";			buildSettings = {
+
+			};				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+
+			name = Debug;				CLANG_ENABLE_MODULES = YES;
+
+		};				CURRENT_PROJECT_VERSION = 1;
+
+		13B07F951A680F5B00A75B9A /* Release */ = {				DEVELOPMENT_TEAM = Z3VKCZH574;
+
+			isa = XCBuildConfiguration;				ENABLE_BITCODE = NO;
+
+			baseConfigurationReference = AAF1A7212681DDCE00B0DD8C /* Pods-VerryApp.release.xcconfig */;				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+
+			buildSettings = {				HERMES_CLI_PATH = "";
+
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;				INFOPLIST_FILE = VerryApp/Info.plist;
+
+				CLANG_ENABLE_MODULES = YES;				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+
+				CURRENT_PROJECT_VERSION = 1;				LD_RUNPATH_SEARCH_PATHS = (
+
+				DEVELOPMENT_TEAM = Z3VKCZH574;					"$(inherited)",
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";					"@executable_path/Frameworks",
+
+				HERMES_CLI_PATH = "";				);
+
+				INFOPLIST_FILE = VerryApp/Info.plist;				MARKETING_VERSION = 1.0;
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;				OTHER_LDFLAGS = (
+
+				LD_RUNPATH_SEARCH_PATHS = (					"$(inherited)",
+
+					"$(inherited)",					"-ObjC",
+
+					"@executable_path/Frameworks",					"-lc++",
+
+				);				);
+
+				MARKETING_VERSION = 1.0;				PRODUCT_BUNDLE_IDENTIFIER = com.appnoize.verryai;
+
+				OTHER_LDFLAGS = (				PRODUCT_NAME = VerryApp;
+
+					"$(inherited)",				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+
+					"-ObjC",				SWIFT_VERSION = 5.0;
+
+					"-lc++",				VERSIONING_SYSTEM = "apple-generic";
+
+				);			};
+
+				PRODUCT_BUNDLE_IDENTIFIER = com.appnoize.verryai;			name = Debug;
+
+				PRODUCT_NAME = VerryApp;		};
+
+				SWIFT_VERSION = 5.0;		13B07F951A680F5B00A75B9A /* Release */ = {
+
+				VERSIONING_SYSTEM = "apple-generic";			isa = XCBuildConfiguration;
+
+			};			baseConfigurationReference = F43BF2EEE9CE1D44DCA7F730 /* Pods-VerryApp.release.xcconfig */;
+
+			name = Release;			buildSettings = {
+
+		};				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+
+		83CBBA201A601CBA00E9B192 /* Debug */ = {				CLANG_ENABLE_MODULES = YES;
+
+			isa = XCBuildConfiguration;				CURRENT_PROJECT_VERSION = 1;
+
+			buildSettings = {				DEVELOPMENT_TEAM = Z3VKCZH574;
+
+				ALWAYS_SEARCH_USER_PATHS = NO;				INFOPLIST_FILE = VerryApp/Info.plist;
+
+				CC = "";				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;				LD_RUNPATH_SEARCH_PATHS = (
+
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";					"$(inherited)",
+
+				CLANG_CXX_LIBRARY = "libc++";					"@executable_path/Frameworks",
+
+				CLANG_ENABLE_MODULES = YES;				);
+
+				CLANG_ENABLE_OBJC_ARC = YES;				MARKETING_VERSION = 1.0;
+
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;				OTHER_LDFLAGS = (
+
+				CLANG_WARN_BOOL_CONVERSION = YES;					"$(inherited)",
+
+				CLANG_WARN_COMMA = YES;					"-ObjC",
+
+				CLANG_WARN_CONSTANT_CONVERSION = YES;					"-lc++",
+
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;				);
+
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;				PRODUCT_BUNDLE_IDENTIFIER = com.appnoize.verryai;
+
+				CLANG_WARN_EMPTY_BODY = YES;				PRODUCT_NAME = VerryApp;
+
+				CLANG_WARN_ENUM_CONVERSION = YES;				SWIFT_VERSION = 5.0;
+
+				CLANG_WARN_INFINITE_RECURSION = YES;				VERSIONING_SYSTEM = "apple-generic";
+
+				CLANG_WARN_INT_CONVERSION = YES;			};
+
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;			name = Release;
+
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;		};
+
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;		83CBBA201A601CBA00E9B192 /* Debug */ = {
+
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;			isa = XCBuildConfiguration;
+
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;			buildSettings = {
+
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;				ALWAYS_SEARCH_USER_PATHS = NO;
+
+				CLANG_WARN_STRICT_PROTOTYPES = YES;				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;				CC = "";
+
+				CLANG_WARN_UNREACHABLE_CODE = YES;				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";				CLANG_CXX_LIBRARY = "libc++";
+
+				COPY_PHASE_STRIP = NO;				CLANG_ENABLE_MODULES = YES;
+
+				CXX = "";				CLANG_ENABLE_OBJC_ARC = YES;
+
+				ENABLE_STRICT_OBJC_MSGSEND = YES;				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+
+				ENABLE_TESTABILITY = YES;				CLANG_WARN_BOOL_CONVERSION = YES;
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";				CLANG_WARN_COMMA = YES;
+
+				GCC_C_LANGUAGE_STANDARD = gnu99;				CLANG_WARN_CONSTANT_CONVERSION = YES;
+
+				GCC_DYNAMIC_NO_PIC = NO;				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+
+				GCC_NO_COMMON_BLOCKS = YES;				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+
+				GCC_OPTIMIZATION_LEVEL = 0;				CLANG_WARN_EMPTY_BODY = YES;
+
+				GCC_PREPROCESSOR_DEFINITIONS = (				CLANG_WARN_ENUM_CONVERSION = YES;
+
+					"DEBUG=1",				CLANG_WARN_INFINITE_RECURSION = YES;
+
+					"$(inherited)",				CLANG_WARN_INT_CONVERSION = YES;
+
+				);				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+
+				GCC_WARN_UNDECLARED_SELECTOR = YES;				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+
+				GCC_WARN_UNUSED_FUNCTION = YES;				CLANG_WARN_STRICT_PROTOTYPES = YES;
+
+				GCC_WARN_UNUSED_VARIABLE = YES;				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;				CLANG_WARN_UNREACHABLE_CODE = YES;
+
+				LD = "";				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+
+				LDPLUSPLUS = "";				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+
+				LD_RUNPATH_SEARCH_PATHS = (				COPY_PHASE_STRIP = NO;
+
+					/usr/lib/swift,				CXX = "";
+
+					"$(inherited)",				DEVELOPMENT_TEAM = Z3VKCZH574;
+
+				);				ENABLE_STRICT_OBJC_MSGSEND = YES;
+
+				LIBRARY_SEARCH_PATHS = (				ENABLE_TESTABILITY = YES;
+
+					"\"$(SDKROOT)/usr/lib/swift\"",				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+
+					"\"$(inherited)\"",				GCC_C_LANGUAGE_STANDARD = gnu99;
+
+				);				GCC_DYNAMIC_NO_PIC = NO;
+
+				MTL_ENABLE_DEBUG_INFO = YES;				GCC_NO_COMMON_BLOCKS = YES;
+
+				ONLY_ACTIVE_ARCH = YES;				GCC_OPTIMIZATION_LEVEL = 0;
+
+				OTHER_CPLUSPLUSFLAGS = (				GCC_PREPROCESSOR_DEFINITIONS = (
+
+					"$(OTHER_CFLAGS)",					"DEBUG=1",
+
+					"-DFOLLY_NO_CONFIG",					"$(inherited)",
+
+					"-DFOLLY_MOBILE=1",				);
+
+					"-DFOLLY_USE_LIBCPP=1",				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+
+					"-DFOLLY_CFG_NO_COROUTINES=1",				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+
+				);				GCC_WARN_UNDECLARED_SELECTOR = YES;
+
+				OTHER_LDFLAGS = (				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+
+					"$(inherited)",				GCC_WARN_UNUSED_FUNCTION = YES;
+
+					" ",				GCC_WARN_UNUSED_VARIABLE = YES;
+
+				);				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";				LD = "";
+
+				SDKROOT = iphoneos;				LDPLUSPLUS = "";
+
+				USE_HERMES = false;				LD_RUNPATH_SEARCH_PATHS = (
+
+			};					/usr/lib/swift,
+
+			name = Debug;					"$(inherited)",
+
+		};				);
+
+		83CBBA211A601CBA00E9B192 /* Release */ = {				LIBRARY_SEARCH_PATHS = (
+
+			isa = XCBuildConfiguration;					"\"$(SDKROOT)/usr/lib/swift\"",
+
+			buildSettings = {					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+
+				ALWAYS_SEARCH_USER_PATHS = NO;					"\"$(inherited)\"",
+
+				CC = "";				);
+
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;				MTL_ENABLE_DEBUG_INFO = YES;
+
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";				ONLY_ACTIVE_ARCH = YES;
+
+				CLANG_CXX_LIBRARY = "libc++";				OTHER_CPLUSPLUSFLAGS = (
+
+				CLANG_ENABLE_MODULES = YES;					"$(OTHER_CFLAGS)",
+
+				CLANG_ENABLE_OBJC_ARC = YES;					"-DFOLLY_NO_CONFIG",
+
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;					"-DFOLLY_MOBILE=1",
+
+				CLANG_WARN_BOOL_CONVERSION = YES;					"-DFOLLY_USE_LIBCPP=1",
+
+				CLANG_WARN_COMMA = YES;					"-DFOLLY_CFG_NO_COROUTINES=1",
+
+				CLANG_WARN_CONSTANT_CONVERSION = YES;					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
+
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;				);
+
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;				OTHER_LDFLAGS = (
+
+				CLANG_WARN_EMPTY_BODY = YES;					"$(inherited)",
+
+				CLANG_WARN_ENUM_CONVERSION = YES;					" ",
+
+				CLANG_WARN_INFINITE_RECURSION = YES;				);
+
+				CLANG_WARN_INT_CONVERSION = YES;				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
+
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;				SDKROOT = iphoneos;
+
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;				USE_HERMES = false;
+
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;			};
+
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;			name = Debug;
+
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;		};
+
+				CLANG_WARN_STRICT_PROTOTYPES = YES;		83CBBA211A601CBA00E9B192 /* Release */ = {
+
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;			isa = XCBuildConfiguration;
+
+				CLANG_WARN_UNREACHABLE_CODE = YES;			buildSettings = {
+
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;				ALWAYS_SEARCH_USER_PATHS = NO;
+
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+
+				COPY_PHASE_STRIP = YES;				CC = "";
+
+				CXX = "";				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+
+				ENABLE_NS_ASSERTIONS = NO;				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+
+				ENABLE_STRICT_OBJC_MSGSEND = YES;				CLANG_CXX_LIBRARY = "libc++";
+
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";				CLANG_ENABLE_MODULES = YES;
+
+				GCC_C_LANGUAGE_STANDARD = gnu99;				CLANG_ENABLE_OBJC_ARC = YES;
+
+				GCC_NO_COMMON_BLOCKS = YES;				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;				CLANG_WARN_BOOL_CONVERSION = YES;
+
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;				CLANG_WARN_COMMA = YES;
+
+				GCC_WARN_UNDECLARED_SELECTOR = YES;				CLANG_WARN_CONSTANT_CONVERSION = YES;
+
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+
+				GCC_WARN_UNUSED_FUNCTION = YES;				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+
+				GCC_WARN_UNUSED_VARIABLE = YES;				CLANG_WARN_EMPTY_BODY = YES;
+
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;				CLANG_WARN_ENUM_CONVERSION = YES;
+
+				LD = "";				CLANG_WARN_INFINITE_RECURSION = YES;
+
+				LDPLUSPLUS = "";				CLANG_WARN_INT_CONVERSION = YES;
+
+				LD_RUNPATH_SEARCH_PATHS = (				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+
+					/usr/lib/swift,				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+
+					"$(inherited)",				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+
+				);				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+
+				LIBRARY_SEARCH_PATHS = (				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+
+					"\"$(SDKROOT)/usr/lib/swift\"",				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",				CLANG_WARN_STRICT_PROTOTYPES = YES;
+
+					"\"$(inherited)\"",				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+
+				);				CLANG_WARN_UNREACHABLE_CODE = YES;
+
+				MTL_ENABLE_DEBUG_INFO = NO;				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+
+				OTHER_CPLUSPLUSFLAGS = (				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+
+					"$(OTHER_CFLAGS)",				COPY_PHASE_STRIP = YES;
+
+					"-DFOLLY_NO_CONFIG",				CXX = "";
+
+					"-DFOLLY_MOBILE=1",				DEVELOPMENT_TEAM = Z3VKCZH574;
+
+					"-DFOLLY_USE_LIBCPP=1",				ENABLE_NS_ASSERTIONS = NO;
+
+					"-DFOLLY_CFG_NO_COROUTINES=1",				ENABLE_STRICT_OBJC_MSGSEND = YES;
+
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+
+				);				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+
+				OTHER_LDFLAGS = (				GCC_C_LANGUAGE_STANDARD = gnu99;
+
+					"$(inherited)",				GCC_NO_COMMON_BLOCKS = YES;
+
+					" ",				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+
+				);				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";				GCC_WARN_UNDECLARED_SELECTOR = YES;
+
+				SDKROOT = iphoneos;				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+
+				USE_HERMES = false;				GCC_WARN_UNUSED_FUNCTION = YES;
+
+				VALIDATE_PRODUCT = YES;				GCC_WARN_UNUSED_VARIABLE = YES;
+
+			};				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+
+			name = Release;				LD = "";
+
+		};				LDPLUSPLUS = "";
+
+/* End XCBuildConfiguration section */				LD_RUNPATH_SEARCH_PATHS = (
+
+					/usr/lib/swift,
+
+/* Begin XCConfigurationList section */					"$(inherited)",
+
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */ = {				);
+
+			isa = XCConfigurationList;				LIBRARY_SEARCH_PATHS = (
+
+			buildConfigurations = (					"\"$(SDKROOT)/usr/lib/swift\"",
+
+				13B07F941A680F5B00A75B9A /* Debug */,					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+
+				13B07F951A680F5B00A75B9A /* Release */,					"\"$(inherited)\"",
+
+			);				);
+
+			defaultConfigurationIsVisible = 0;				MTL_ENABLE_DEBUG_INFO = NO;
+
+			defaultConfigurationName = Release;				OTHER_CPLUSPLUSFLAGS = (
+
+		};					"$(OTHER_CFLAGS)",
+
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */ = {					"-DFOLLY_NO_CONFIG",
+
+			isa = XCConfigurationList;					"-DFOLLY_MOBILE=1",
+
+			buildConfigurations = (					"-DFOLLY_USE_LIBCPP=1",
+
+				83CBBA201A601CBA00E9B192 /* Debug */,					"-DFOLLY_CFG_NO_COROUTINES=1",
+
+				83CBBA211A601CBA00E9B192 /* Release */,					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
+
+			);				);
+
+			defaultConfigurationIsVisible = 0;				OTHER_LDFLAGS = (
+
+			defaultConfigurationName = Release;					"$(inherited)",
+
+		};					" ",
+
+/* End XCConfigurationList section */				);
+
+	};				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
+
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;				SDKROOT = iphoneos;
+
+}				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				USE_HERMES = false;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerryApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VerryApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}

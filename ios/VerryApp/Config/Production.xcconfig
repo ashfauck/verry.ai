@@ -1,0 +1,16 @@
+//
+// Production.xcconfig
+// Configuration for Production environment
+//
+
+// Include Pods Release configuration
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.release.xcconfig"
+
+// App Display Name
+DISPLAY_NAME = VerryApp
+
+// Bundle Identifier
+PRODUCT_BUNDLE_IDENTIFIER = $(inherited)
+
+// Other production-specific settings
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) PRODUCTION=1

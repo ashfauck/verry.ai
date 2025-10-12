@@ -1,0 +1,8 @@
+#include "Pods/Target Support Files/Pods-VerryApp/Pods-VerryApp.dev.debug.xcconfig"
+
+// Development Debug Configuration
+APP_DISPLAY_NAME = VerryApp Dev D
+BUNDLE_ID_PREFIX = dev.appnoize
+BUNDLE_ID_SUFFIX = .verry.ai
+CODE_SIGN_ENTITLEMENTS = VerryApp/VerryApp-Development.entitlements
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEVELOPMENT=1

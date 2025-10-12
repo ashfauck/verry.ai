@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated icon for Android mipmap-xxxhdpi -->
+<resources>
+    <item name="ic_launcher_foreground" type="drawable">@mipmap/ic_launcher_foreground.png</item>
+    <item name="ic_launcher_round" type="drawable">@mipmap/ic_launcher_round.png</item>
+    <item name="ic_launcher" type="drawable">@mipmap/ic_launcher.png</item>
+</resources>

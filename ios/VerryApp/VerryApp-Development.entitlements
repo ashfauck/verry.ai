@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:dev.verry.ai</string>
+		<string>applinks:54n8hcsj-3000.inc1.devtunnels.ms</string>
+		<string>applinks:localhost:3000</string>
+		<string>applinks:127.0.0.1:3000</string>
+		<string>applinks:192.168.68.58:3000</string>
+		<string>applinks:verry.ai</string>
+	</array>
+</dict>
+</plist>
