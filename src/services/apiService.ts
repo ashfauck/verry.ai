@@ -1,3 +1,27 @@
+// --- Document Upload API Types ---
+export interface DocumentUploadRequest {
+  image_url: string;
+  verification_id: string;
+  attempt_id: string;
+  document_type: string;
+  scan_type: string;
+}
+
+export interface DocumentUploadResponse {
+  success: boolean;
+  message: string;
+  data: {
+    verification_id: string;
+    attempt_id: string;
+    document_type: string;
+    scan_type: string;
+    image_url: string;
+    file_path: string;
+    uploaded_at: string;
+    document_record_id: string;
+    image_side: string;
+  };
+}
 // --- Attachment Upload Types ---
 export interface AttachmentUploadRequest {
   attachments: Array<{
@@ -28,6 +52,8 @@ export interface AttachmentUploadResult {
 }
 
 export interface AttachmentUploadResponse {
+  success: boolean;
+  message: string;
   results: AttachmentUploadResult[];
 }
 // --- Verify Email Code Types ---
@@ -86,6 +112,17 @@ class ApiService {
   
     if (shouldLog('debug')) {
       console.log(`API Request: ${options.method || 'GET'} ${url}`);
+      if (options.body) {
+        try {
+          const parsedBody = typeof options.body === 'string' ? JSON.parse(options.body) : options.body;
+          console.log('Request Body:', parsedBody);
+        } catch (e) {
+          console.log('Request Body (raw):', options.body);
+        }
+      }
+      if (options.headers) {
+        console.log('Request Headers:', options.headers);
+      }
     }
 
     const controller = new AbortController();
@@ -106,7 +143,9 @@ class ApiService {
       const responseData = await response.json();
 
       if (shouldLog('debug')) {
-        console.log(`API Response: ${response.status}`, responseData);
+        console.log(`API Response: ${response.status} ${url}`);
+        console.log('Response Data:', responseData);
+        console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
       }
 
       if (!response.ok) {
@@ -202,7 +241,7 @@ class ApiService {
         formData.append(`attachments[${idx}].metadata`, JSON.stringify(att.metadata));
       }
     });
-    return this.makeRequest<AttachmentUploadResponse>('attachments/upload', {
+    return this.makeRequest<AttachmentUploadResponse>('attachments-upload', {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
@@ -215,15 +254,18 @@ class ApiService {
 
   // Document Verification
   async uploadDocument(
-    documentData: {
-      frontImage: string;
-      backImage: string;
-      documentType: string;
-    }
-  ): Promise<ApiResponse> {
-    return this.makeRequest('/verification/document', {
+    req: DocumentUploadRequest,
+    apiKey: string = 'ak_39f459c596d049b085071f74',
+    clientId: string = 'cli_4mtqfircysno'
+  ): Promise<ApiResponse<DocumentUploadResponse>> {
+    return this.makeRequest<DocumentUploadResponse>('upload-verification-image', {
       method: 'POST',
-      body: JSON.stringify(documentData),
+      headers: {
+        'x-api-key': apiKey,
+        'x-client-id': clientId,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req),
     });
   }
 

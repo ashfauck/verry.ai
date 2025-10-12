@@ -1,14 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  SafeAreaView,
-  Dimensions,
-  Animated,
-  Platform,
-} from 'react-native';
+import { View, Text, StyleSheet, Alert, SafeAreaView, Dimensions, Animated, Platform } from 'react-native';
+import { apiService, AttachmentUploadResult } from '../services/apiService';
+import uuid from 'react-native-uuid';
 import {useRecoilState} from 'recoil';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -23,10 +16,16 @@ import {Button} from '../components';
 import {verificationState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
 import type {NavigationProps} from '../types';
+import Snackbar from '@/components/Snackbar';
+import { showSnackbar } from '@/components/snackbarService';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
 const FaceVerificationScreen: React.FC = () => {
+  // Add Recoil values for attemptId and verificationId if needed
+  // import {attemptIdState, verificationIdState} from '../store/atoms';
+  // const attemptId = useRecoilValue(attemptIdState);
+  // const verificationId = useRecoilValue(verificationIdState);
   const {theme} = useTheme();
   const navigation = useNavigation<NavigationProps['navigation']>();
   const [verification, setVerification] = useRecoilState(verificationState);
@@ -133,14 +132,41 @@ const FaceVerificationScreen: React.FC = () => {
   const completeFaceVerification = async () => {
     setIsProcessing(true);
     setInstruction(STRINGS.face.processingFace);
-    
     try {
       // Capture the face photo
       const faceImageUri = await captureFacePhoto();
-      
-      // Simulate face verification processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      if (!faceImageUri) throw new Error('No face image captured');
+
+      // Upload face image as attachment
+      const attachment = {
+        file: {
+          uri: faceImageUri,
+          type: 'image/jpeg',
+          name: 'face.jpg',
+        },
+        fileId: uuid.v4(),
+        contentType: 'image/jpeg',
+        metadata: { caption: 'Face Image' },
+      };
+      const attachmentRes = await apiService.uploadAttachments({ attachments: [attachment] });
+      if (!attachmentRes.success || !attachmentRes.data || attachmentRes.data.results.some(r => r.error)) {
+        throw new Error('Failed to upload face image');
+      }
+      const uploadedFileId = attachmentRes.data.results[0].fileId;
+
+      // Now upload document (face verification)
+      const documentReq = {
+        image_url: faceImageUri,
+        // Uncomment and use these if you have attemptId/verificationId available:
+        // verification_id: verificationId,
+        // attempt_id: attemptId,
+        scan_type: 'face',
+      };
+      const documentRes = await apiService.uploadDocument(documentReq);
+      if (!documentRes.success) {
+        throw new Error('Failed to upload face verification document');
+      }
+
       setVerification(prev => ({
         ...prev,
         faceImage: faceImageUri || null,
@@ -148,18 +174,21 @@ const FaceVerificationScreen: React.FC = () => {
         currentStep: 'complete',
       }));
 
-      Alert.alert(
-        STRINGS.common.success,
-        STRINGS.success.verificationComplete,
-        [{
-          text: STRINGS.common.continue,
-          onPress: () => navigation.navigate('Home')
-        }]
-      );
+      showSnackbar(STRINGS.success.verificationComplete);
+
+      navigation.navigate('Home');
+      // Alert.alert(
+      //   STRINGS.common.success,
+      //   STRINGS.success.verificationComplete,
+      //   [{
+      //     text: STRINGS.common.continue,
+      //     onPress: () => navigation.navigate('Home')
+      //   }]
+      // );
     } catch (error) {
       Alert.alert(STRINGS.common.error, STRINGS.errors.serverError);
       resetFaceDetection();
-    } finally {
+    } finally {ddddd
       setIsProcessing(false);
     }
   };

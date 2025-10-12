@@ -21,6 +21,7 @@ export interface VerificationState {
   faceVerified: boolean;
   isLoading: boolean;
   error: string | null;
+  udid?: string; // Added for document uploads
 }
 
 export interface EmailVerificationData {
