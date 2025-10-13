@@ -102,22 +102,24 @@ const OnboardingScreen: React.FC = () => {
               return;
             } else {
               // All steps completed, navigate to Success or Dashboard
-              navigation.navigate('Success');
+              navigation.navigate('Home');
               return;
             }
           }
         } else {
+          navigation.navigate('NotFound');
+          return;
           // Attempt ID mismatch or not found, show alert only
-          Alert.alert(
-            'Verification Error',
-            'Attempt ID does not match or not found. Please try again.',
-            [
-              {
-                text: 'OK',
-                onPress: () => {},
-              },
-            ]
-          );
+          // Alert.alert(
+          //   'Verification Error',
+          //   'Attempt ID does not match or not found. Please try again.',
+          //   [
+          //     {
+          //       text: 'OK',
+          //       onPress: () => {},
+          //     },
+          //   ]
+          // );
         }
       } else {
         // API call failed, show error only

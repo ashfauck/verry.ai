@@ -1,8 +1,10 @@
+import { TouchableOpacity } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
+import { Image } from 'react-native';
 import { View, Text, StyleSheet, Alert, SafeAreaView, Dimensions, Animated, Platform } from 'react-native';
-import { apiService, AttachmentUploadResult } from '../services/apiService';
+import { apiService, AttachmentUploadResult, DocumentUploadRequest } from '../services/apiService';
 import uuid from 'react-native-uuid';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {useNavigation} from '@react-navigation/native';
 import {
   Camera,
@@ -13,7 +15,7 @@ import {
 } from 'react-native-vision-camera';
 import {useTheme} from '../components/ThemeProvider';
 import {Button} from '../components';
-import {verificationState} from '../store/atoms';
+import {attemptIdState, verificationIdState, verificationState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
 import type {NavigationProps} from '../types';
 import Snackbar from '@/components/Snackbar';
@@ -34,10 +36,11 @@ const FaceVerificationScreen: React.FC = () => {
   const [faceDetected, setFaceDetected] = useState(false);
   const [captureProgress, setCaptureProgress] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [instruction, setInstruction] = useState<string>(STRINGS.face.positionFace);
+  const [instruction, setInstruction] = useState<string>('Take the picture in bright light, and position your face in the frame.');
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [capturedFace, setCapturedFace] = useState<string | null>(null);
-  
+  const verificationId = useRecoilValue(verificationIdState);
+  const attemptId = useRecoilValue(attemptIdState);
   const pulseAnim = new Animated.Value(1);
   const progressAnim = new Animated.Value(0);
 
@@ -69,10 +72,11 @@ const FaceVerificationScreen: React.FC = () => {
     ).start();
   }, [hasPermission, requestPermission]);
 
+
+  // Start face detection and animate, then capture photo automatically
   const startFaceDetection = async () => {
     setIsDetecting(true);
     setInstruction(STRINGS.face.lookStraight);
-    
     // Simulate face detection process
     setTimeout(() => {
       setFaceDetected(true);
@@ -81,25 +85,21 @@ const FaceVerificationScreen: React.FC = () => {
     }, 2000);
   };
 
+  // Animate and capture photo automatically, but do NOT call API yet
   const startCapture = () => {
     setInstruction(STRINGS.face.faceCapturing);
-    
-    // Animate capture progress
     Animated.timing(progressAnim, {
       toValue: 100,
       duration: 3000,
       useNativeDriver: false,
-    }).start(({finished}) => {
-      if (finished) {
-        completeFaceVerification();
-      }
-    });
+    }).start();
 
-    // Update progress state
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       setCaptureProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval);
+          // Capture photo automatically when animation completes
+          captureFacePhoto();
           return 100;
         }
         return prev + 2;
@@ -107,21 +107,21 @@ const FaceVerificationScreen: React.FC = () => {
     }, 60);
   };
 
+
+  // Capture photo and show preview, but do NOT call API yet
   const captureFacePhoto = async () => {
     if (!cameraRef.current || !isCameraReady) {
       Alert.alert(STRINGS.common.error, 'Camera not ready');
       return;
     }
-
     try {
       const options: TakePhotoOptions = {
-        flash: 'off', // No flash for face photos
+        flash: 'off',
       };
-
       const photo: PhotoFile = await cameraRef.current.takePhoto(options);
       const imageUri = Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
-      
       setCapturedFace(imageUri);
+      setInstruction('Review your photo. Retake if needed.');
       return imageUri;
     } catch (error) {
       console.error('Face capture error:', error);
@@ -129,18 +129,31 @@ const FaceVerificationScreen: React.FC = () => {
     }
   };
 
+
+  // Only call API when user clicks Continue
   const completeFaceVerification = async () => {
+    if (!capturedFace) {
+      Alert.alert(STRINGS.common.error, 'No face image captured');
+      return;
+    }
     setIsProcessing(true);
     setInstruction(STRINGS.face.processingFace);
     try {
-      // Capture the face photo
-      const faceImageUri = await captureFacePhoto();
-      if (!faceImageUri) throw new Error('No face image captured');
+      await uploadAttachments(capturedFace);
+    } catch (error) {
+      Alert.alert(STRINGS.common.error, STRINGS.errors.serverError);
+      resetFaceDetection();
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const uploadAttachments = async (imageUri: string) => {
 
       // Upload face image as attachment
       const attachment = {
         file: {
-          uri: faceImageUri,
+          uri: imageUri,
           type: 'image/jpeg',
           name: 'face.jpg',
         },
@@ -152,15 +165,23 @@ const FaceVerificationScreen: React.FC = () => {
       if (!attachmentRes.success || !attachmentRes.data || attachmentRes.data.results.some(r => r.error)) {
         throw new Error('Failed to upload face image');
       }
-      const uploadedFileId = attachmentRes.data.results[0].fileId;
+      const uploadedURL = attachmentRes.data.results[0].downloadUrl;
 
+      if (!uploadedURL) {
+        throw new Error('Uploaded URL is missing');
+      }
+
+      if (!verificationId || !attemptId) {
+        showSnackbar('Verification ID or Attempt ID is missing. Please restart the verification process.', 'error');
+        return;
+      }
       // Now upload document (face verification)
-      const documentReq = {
-        image_url: faceImageUri,
-        // Uncomment and use these if you have attemptId/verificationId available:
-        // verification_id: verificationId,
-        // attempt_id: attemptId,
-        scan_type: 'face',
+      const documentReq: DocumentUploadRequest = {
+        image_url: uploadedURL,
+        verification_id: verificationId,
+        attempt_id: attemptId,
+        document_type: 'face_scan',
+        scan_type: 'scan_face',
       };
       const documentRes = await apiService.uploadDocument(documentReq);
       if (!documentRes.success) {
@@ -169,7 +190,7 @@ const FaceVerificationScreen: React.FC = () => {
 
       setVerification(prev => ({
         ...prev,
-        faceImage: faceImageUri || null,
+        faceImage: imageUri || null,
         faceVerified: true,
         currentStep: 'complete',
       }));
@@ -177,21 +198,7 @@ const FaceVerificationScreen: React.FC = () => {
       showSnackbar(STRINGS.success.verificationComplete);
 
       navigation.navigate('Home');
-      // Alert.alert(
-      //   STRINGS.common.success,
-      //   STRINGS.success.verificationComplete,
-      //   [{
-      //     text: STRINGS.common.continue,
-      //     onPress: () => navigation.navigate('Home')
-      //   }]
-      // );
-    } catch (error) {
-      Alert.alert(STRINGS.common.error, STRINGS.errors.serverError);
-      resetFaceDetection();
-    } finally {ddddd
-      setIsProcessing(false);
-    }
-  };
+    };
 
   const resetFaceDetection = () => {
     setIsDetecting(false);
@@ -323,7 +330,11 @@ const FaceVerificationScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+
+  <View style={{ flex: 1 }}>
+        {/* Only show one retake button above main action button */}
+
+        <View style={styles.header}>
         <Text style={styles.title}>{STRINGS.face.facialVerification}</Text>
         <Text style={styles.subtitle}>{STRINGS.face.faceInstruction}</Text>
       </View>
@@ -337,7 +348,22 @@ const FaceVerificationScreen: React.FC = () => {
             ]}
           >
             {capturedFace ? (
-              <Text style={styles.faceIcon}>✅</Text>
+              <>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{ width: 260, height: 260, borderRadius: 130, borderWidth: 4, borderColor: theme.colors.success, backgroundColor: theme.colors.backgroundSecondary, overflow: 'hidden', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                      source={{ uri: capturedFace }}
+                      style={{ width: 260, height: 260, borderRadius: 130 }}
+                      resizeMode="cover"
+                    />
+                    {/* Tick icon centered inside circle */}
+                    <View style={{ position: 'absolute', top: '50%', left: '50%', transform: [{ translateX: -24 }, { translateY: -24 }], zIndex: 2 }}>
+                      <Text style={{ fontSize: 48, color: theme.colors.success }}>✅</Text>
+                    </View>
+                    {/* Removed duplicate retake button */}
+                  </View>
+                </View>
+              </>
             ) : (
               <>
                 <Camera
@@ -352,7 +378,6 @@ const FaceVerificationScreen: React.FC = () => {
                     Alert.alert('Camera Error', 'Failed to initialize camera');
                   }}
                 />
-                
                 {/* Face frame overlay */}
                 <View style={styles.faceOverlay}>
                   <View style={styles.faceFrameInner} />
@@ -398,10 +423,36 @@ const FaceVerificationScreen: React.FC = () => {
       </View>
 
       <View style={styles.buttonContainer}>
+        {/* Retake button just above main action, right-aligned */}
+        {capturedFace && (
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 28 }}>
+            <TouchableOpacity
+              onPress={() => {
+                // Reset all state so user must click Start Face Verification again
+                setCapturedFace(null);
+                setIsDetecting(false);
+                setFaceDetected(false);
+                setCaptureProgress(0);
+                setInstruction('Take the picture in bright light, and position your face in the frame.');
+                progressAnim.setValue(0);
+              }}
+            >
+              <Text style={{ color: theme.colors.error, fontWeight: 'bold', fontSize: 16, paddingHorizontal: 16 }}>Retake</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {/* Show Continue button only when capturedFace, else show Start Face Verification/Cancel/Allow Camera Access */}
         {!hasPermission ? (
           <Button
             title="Allow Camera Access"
             onPress={requestPermission}
+            fullWidth
+          />
+        ) : capturedFace ? (
+          <Button
+            title={STRINGS.common.continue}
+            onPress={completeFaceVerification}
+            loading={isProcessing}
             fullWidth
           />
         ) : !isDetecting ? (
@@ -409,13 +460,6 @@ const FaceVerificationScreen: React.FC = () => {
             title="Start Face Verification"
             onPress={startFaceDetection}
             disabled={!isCameraReady}
-            fullWidth
-          />
-        ) : captureProgress >= 100 ? (
-          <Button
-            title={STRINGS.common.continue}
-            onPress={() => navigation.navigate('Home')}
-            loading={isProcessing}
             fullWidth
           />
         ) : (
@@ -426,6 +470,7 @@ const FaceVerificationScreen: React.FC = () => {
             fullWidth
           />
         )}
+      </View>
       </View>
     </SafeAreaView>
   );

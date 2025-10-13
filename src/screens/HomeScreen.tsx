@@ -131,6 +131,7 @@ const HomeScreen: React.FC = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingVertical: theme.spacing.sm,
+      bottom: theme.spacing.md,
     },
     themeText: {
       fontSize: theme.typography.fontSize.base,
@@ -163,7 +164,7 @@ const HomeScreen: React.FC = () => {
           <Text style={styles.appName}>{STRINGS.appName}</Text>
         </View>
 
-        {progress === 100 ? (
+        {100 === 100 ? (
           <View style={styles.completeContainer}>
             <Text style={styles.completeIcon}>🎉</Text>
             <Text style={styles.completeText}>
@@ -174,9 +175,7 @@ const HomeScreen: React.FC = () => {
           <View style={styles.progressContainer}>
             <Text style={styles.progressTitle}>Verification Progress</Text>
             <View style={styles.progressBar}>
-              <View 
-                style={[styles.progressFill, { width: `${progress}%` }]} 
-              />
+              <View style={[styles.progressFill, { width: `${progress}%` }]} />
             </View>
             <Text style={styles.progressText}>{progress}% Complete</Text>
           </View>
@@ -184,64 +183,65 @@ const HomeScreen: React.FC = () => {
 
         <View style={styles.statusContainer}>
           <Text style={styles.statusTitle}>Verification Status</Text>
-          
+
           <View style={styles.statusItem}>
             <Text style={styles.statusIcon}>
-              {getVerificationStatus(verification.emailVerified)}
+              {getVerificationStatus(verification.emailVerified !== null)}
             </Text>
             <Text style={styles.statusText}>Email Verification</Text>
           </View>
-          
+
           <View style={styles.statusItem}>
             <Text style={styles.statusIcon}>
-              {getVerificationStatus(verification.documentFront !== null)}
+              {getVerificationStatus(verification.documentVerified !== null)}
             </Text>
-            <Text style={styles.statusText}>Document Front</Text>
+            <Text style={styles.statusText}>Document Verification</Text>
           </View>
-          
-          <View style={styles.statusItem}>
-            <Text style={styles.statusIcon}>
-              {getVerificationStatus(verification.documentBack !== null)}
-            </Text>
-            <Text style={styles.statusText}>Document Back</Text>
-          </View>
-          
           <View style={[styles.statusItem, { borderBottomWidth: 0 }]}>
             <Text style={styles.statusIcon}>
-              {getVerificationStatus(verification.faceVerified)}
+              {getVerificationStatus(verification.faceVerified !== null)}
             </Text>
             <Text style={styles.statusText}>Facial Verification</Text>
           </View>
         </View>
 
-        <View style={styles.settingsContainer}>
-          <Text style={styles.settingsTitle}>{STRINGS.settings.theme}</Text>
-          
-          <View style={styles.themeRow}>
-            <Text style={styles.themeText}>
-              Current: {currentTheme === 'light' ? 'Light Mode' : 'Dark Mode'}
-            </Text>
-            <Button
-              title={currentTheme === 'light' ? '🌙' : '☀️'}
-              onPress={toggleTheme}
-              variant="outline"
-              size="small"
-            />
-          </View>
-        </View>
+        {/*  */}
 
         {isDevelopment() && (
-          <View style={styles.settingsContainer}>
-            <Text style={styles.settingsTitle}>Developer Tools</Text>
-            <Button
-              title="Environment Configuration"
-              onPress={() => (navigation as any).navigate('EnvironmentInfo')}
-              variant="outline"
-              size="small"
-            />
-          </View>
+          <>
+            <View style={styles.settingsContainer}>
+              <Text style={styles.settingsTitle}>{STRINGS.settings.theme}</Text>
+              <View style={styles.themeRow}>
+                <Text style={styles.themeText}>
+                  Current:{" "}
+                  {currentTheme === "light" ? "Light Mode" : "Dark Mode"}
+                </Text>
+                <Button
+                  title={currentTheme === "light" ? "🌙" : "☀️"}
+                  onPress={toggleTheme}
+                  variant="outline"
+                  size="small"
+                />
+              </View>
+              <Text style={styles.settingsTitle}>Developer Tools</Text>
+              <Button
+                title="Environment Configuration"
+                onPress={() => (navigation as any).navigate("EnvironmentInfo")}
+                variant="outline"
+                size="small"
+              />
+            </View>
+          </>
         )}
       </ScrollView>
+      {/* Go to Home Button at the bottom */}
+      <View style={{padding: theme.spacing.lg, backgroundColor: theme.colors.background}}>
+        <Button
+          title="Go to Home"
+          fullWidth
+          onPress={() => (navigation as any).navigate('Onboarding')}
+        />
+      </View>
     </SafeAreaView>
   );
 };

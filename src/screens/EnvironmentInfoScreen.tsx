@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacity, View as RNView } from 'react-native';
 import {
   View,
   Text,
@@ -7,11 +8,16 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {useTheme} from '../components/ThemeProvider';
+import { Button } from '../components';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '../navigation/AppNavigator';
 import environment, {isDevelopment, isProduction} from '../config/environment';
 import {logger} from '../utils/logger';
 
 const EnvironmentInfoScreen: React.FC = () => {
   const {theme} = useTheme();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   // Log environment info on mount
   React.useEffect(() => {
@@ -34,6 +40,21 @@ const EnvironmentInfoScreen: React.FC = () => {
   );
 
   const styles = StyleSheet.create({
+    bottomButtonContainer: {
+      padding: 20,
+      backgroundColor: theme.colors.background,
+    },
+    backButton: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      padding: 16,
+      zIndex: 10,
+    },
+    backIcon: {
+      fontSize: 22,
+      color: theme.colors.textPrimary,
+    },
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
@@ -102,9 +123,12 @@ const EnvironmentInfoScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
+          {/* Back Button */}
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Text style={styles.backIcon}>{'←'}</Text>
+          </TouchableOpacity>
           <Text style={styles.title}>Environment Configuration</Text>
           <Text style={styles.subtitle}>Current app configuration settings</Text>
-          
           <View style={styles.environmentBadge}>
             <Text style={styles.environmentBadgeText}>
               {environment.nodeEnv}
@@ -158,6 +182,14 @@ const EnvironmentInfoScreen: React.FC = () => {
           {renderConfigItem('Metro Port', environment.metroPort)}
         </View>
       </ScrollView>
+      {/* Go to Home Button at the bottom */}
+      <RNView style={styles.bottomButtonContainer}>
+        <Button
+          title="Go to Home"
+          fullWidth
+          onPress={() => navigation.navigate('Home')}
+        />
+      </RNView>
     </SafeAreaView>
   );
 };
