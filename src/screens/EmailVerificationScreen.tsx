@@ -19,6 +19,10 @@ import {STRINGS, VALIDATION} from '../constants';
 import type {NavigationProps} from '../types';
 
 const EmailVerificationScreen: React.FC = () => {
+  // Progress bar step (1 of 3)
+  const currentStep = 1;
+  const totalSteps = 3;
+  const progressPercent = (currentStep / totalSteps) * 100;
   const {theme} = useTheme();
   const navigation = useNavigation<NavigationProps['navigation']>();
   const [verification, setVerification] = useRecoilState(verificationState);
@@ -208,15 +212,28 @@ const EmailVerificationScreen: React.FC = () => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
+      {/* Progress Bar */}
+      <View style={{ width: '100%', height: 8, backgroundColor: theme.colors.inputBorder }}>
+        <View
+          style={{
+            width: `${progressPercent}%`,
+            height: 8,
+            backgroundColor: theme.colors.primary,
+            borderRadius: 4,
+          }}
+        />
+      </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>{STRINGS.auth.emailVerification}</Text>
-        
+        {/* Step indicator */}
+        <Text style={{ textAlign: 'center', color: theme.colors.textSecondary, marginBottom: theme.spacing.md }}>
+          Step {currentStep} of {totalSteps}
+        </Text>
         {!isCodeSent ? (
           <>
             <Text style={styles.subtitle}>
               Enter your email address to receive a verification code
             </Text>
-            
             <View style={styles.inputContainer}>
               <Text style={styles.label}>{STRINGS.auth.emailLabel}</Text>
               <TextInput
@@ -231,7 +248,6 @@ const EmailVerificationScreen: React.FC = () => {
                 editable={!isLoading}
               />
             </View>
-
             <View style={styles.buttonContainer}>
               <Button
                 title={STRINGS.auth.sendCode}
@@ -241,7 +257,6 @@ const EmailVerificationScreen: React.FC = () => {
                 fullWidth
               />
             </View>
-
             <View style={styles.skipContainer}>
             </View>
           </>
@@ -250,7 +265,6 @@ const EmailVerificationScreen: React.FC = () => {
             <Text style={styles.subtitle}>
               Enter the 6-digit code sent to {email}
             </Text>
-            
             <View style={styles.inputContainer}>
               <Text style={styles.label}>{STRINGS.auth.verificationCode}</Text>
               <TextInput
@@ -264,7 +278,6 @@ const EmailVerificationScreen: React.FC = () => {
                 editable={!isLoading}
               />
             </View>
-
             <View style={styles.buttonContainer}>
               <Button
                 title={STRINGS.auth.verifyEmail}
@@ -274,7 +287,6 @@ const EmailVerificationScreen: React.FC = () => {
                 fullWidth
               />
             </View>
-
             <View style={styles.resendContainer}>
               {timer > 0 ? (
                 <Text style={styles.timerText}>
@@ -290,7 +302,6 @@ const EmailVerificationScreen: React.FC = () => {
                 />
               )}
             </View>
-
             <View style={styles.skipContainer}>
             </View>
           </>

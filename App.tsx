@@ -96,15 +96,6 @@ function useInstallDocumentProcessor() {
 // };
 
 const App = (): JSX.Element => {
-  // Debug: Show snackbar on app load to verify visibility
-  React.useEffect(() => {
-    setTimeout(() => {
-      // @ts-ignore
-      import('./src/components/snackbarService').then(({ showSnackbar }) => {
-        showSnackbar('Snackbar Test: If you see this, it works!', 'info', 4000);
-      });
-    }, 1000);
-  }, []);
   useInstallDocumentProcessor();
   const navigationRef = React.useRef<NavigationContainerRef<RootStackParamList>>(null);
   const snackbarRef = React.useRef<any>(null);

@@ -339,9 +339,29 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
 
   const canContinue = verification.documentFront && verification.documentBack;
 
+  // Progress bar step (2 of 3)
+  const currentStep = 2;
+  const totalSteps = 3;
+  const progressPercent = (currentStep / totalSteps) * 100;
+
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.background}]}> 
+      {/* Progress Bar */}
+      <View style={{ width: '100%', height: 8, backgroundColor: theme.colors.inputBorder }}>
+        <View
+          style={{
+            width: `${progressPercent}%`,
+            height: 8,
+            backgroundColor: theme.colors.primary,
+            borderRadius: 4,
+          }}
+        />
+      </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+        {/* Step indicator */}
+        <Text style={{ textAlign: 'center', color: theme.colors.textSecondary, marginTop: 8, marginBottom: 8 }}>
+          Step {currentStep} of {totalSteps}
+        </Text>
         <View style={styles.header}> 
           <Text style={[styles.title, {color: theme.colors.textPrimary}]}> 
             Document Capture 
@@ -366,8 +386,8 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
               style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
               dropDownContainerStyle={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
               textStyle={{ color: theme.colors.textPrimary }}
-              arrowIconStyle={{ tintColor: isDark ? '#fff' : '#222' }}
-              tickIconStyle={{ tintColor: isDark ? '#fff' : '#222' }}
+              arrowIconStyle={{}}
+              tickIconStyle={{}}
               placeholder="Select document type"
             />
           </View>
