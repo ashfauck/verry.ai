@@ -11,7 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
-import {Button} from '../components';
+import {Button, Logo} from '../components';
 import {STRINGS} from '../constants/strings';
 import {useVerificationStatus} from '../hooks/useVerificationStatus';
 import {useDeepLinking} from '../hooks/useDeepLinking';
@@ -186,6 +186,13 @@ const OnboardingScreen: React.FC = () => {
       textAlign: 'center',
       marginBottom: theme.spacing.xl,
     },
+    welcomeContainer: {
+      alignItems: 'center',
+      marginBottom: theme.spacing.xl,
+    },
+    logoContainer: {
+      marginTop: theme.spacing.md,
+    },
     stepContainer: {
       alignItems: 'center',
       marginVertical: theme.spacing['2xl'],
@@ -240,11 +247,10 @@ const OnboardingScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         {currentStep === 0 && (
-          <>
+          <View style={styles.welcomeContainer}>
             <Text style={styles.welcomeTitle}>Welcome to</Text>
-            <Text style={styles.appName}>{STRINGS.appName}</Text>
-            <Text style={styles.stepDescription}>{STRINGS.appTagline}</Text>
-          </>
+            <Logo size="large" variant="vertical" showTagline={true} style={styles.logoContainer} />
+          </View>
         )}
         
         <View style={styles.stepContainer}>

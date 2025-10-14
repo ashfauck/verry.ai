@@ -40,7 +40,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
 
   // Create theme object
   const theme: Theme = useMemo(() => ({
-    colors: isDark ? COLORS.dark : COLORS.light,
+    colors: isDark ? COLORS.orangeDark : COLORS.light,
     typography: TYPOGRAPHY,
     spacing: SPACING,
     borderRadius: BORDER_RADIUS,

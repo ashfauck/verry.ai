@@ -48,6 +48,54 @@ export const COLORS = {
     cardBorder: '#E5E7EB',
     cardShadow: 'rgba(0, 0, 0, 0.1)',
   },
+  orangeDark: {
+    // Primary colors
+    primary: '#F39E60',
+    primaryLight: '#9F5255',
+    primaryDark: '#F39E60',
+    
+    // Secondary colors
+    secondary: '#10B981',
+    secondaryLight: '#34D399',
+    secondaryDark: '#059669',
+    
+    // Background colors
+    background: '#37353E',
+    backgroundSecondary: '#44444E',
+    surface: '#373551',
+    
+    // Text colors
+    textPrimary: '#F9FAFB',
+    textSecondary: '#D1D5DB',
+    textTertiary: '#9CA3AF',
+    
+    // Border and divider colors
+    border: '#374151',
+    divider: '#4B5563',
+    
+    // Status colors
+    success: '#10B981',
+    error: '#EF4444',
+    warning: '#F59E0B',
+    info: '#3B82F6',
+    
+    // Button colors
+    buttonPrimary: '#F39E60',
+    buttonSecondary: '#D3DAD9',
+    buttonText: '#000',
+    buttonTextSecondary: '#F9FAFB',
+    
+    // Input colors
+    inputBackground: '#374151',
+    inputBorder: '#4B5563',
+    inputText: '#F9FAFB',
+    inputPlaceholder: '#9CA3AF',
+    
+    // Card colors
+    cardBackground: '#643843',
+    cardBorder: '#A04747',
+    cardShadow: 'rgba(0, 0, 0, 0.25)',
+  },
   dark: {
     // Primary colors
     primary: '#3B82F6',

@@ -372,57 +372,56 @@ const FaceVerificationScreen: React.FC = () => {
 
         <View style={styles.cameraContainer}>
           {hasPermission && frontDevice ? (
-            <Animated.View
-              style={[styles.faceFrame, { transform: [{ scale: pulseAnim }] }]}
-            >
+            <View style={[styles.faceFrame]}>
               {capturedFace ? (
-                <>
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 260,
-                        height: 260,
-                        borderRadius: 130,
-                        borderWidth: 4,
-                        borderColor: theme.colors.success,
-                        backgroundColor: theme.colors.backgroundSecondary,
-                        overflow: "hidden",
-                        position: "relative",
-                        justifyContent: "center",
-                        alignItems: "center",
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                  <Image
+                    source={{ uri: capturedFace }}
+                    style={{ width: screenWidth * 0.7, height: screenWidth * 0.7, borderRadius: (screenWidth * 0.7) / 2 }}
+                    resizeMode="cover"
+                    onLoad={() => {
+                        Animated.loop(
+                          Animated.sequence([
+                            Animated.timing(pulseAnim, {
+                              toValue: 1.1,
+                              duration: 1000,
+                              useNativeDriver: true,
+                            }),
+                            Animated.timing(pulseAnim, {
+                              toValue: 1,
+                              duration: 1000,
+                              useNativeDriver: true,
+                            }),
+                          ])
+                        ).start();
                       }}
-                    >
-                      <Image
-                        source={{ uri: capturedFace }}
-                        style={{ width: 260, height: 260, borderRadius: 130 }}
-                        resizeMode="cover"
-                      />
-                      {/* Tick icon centered inside circle */}
-                      <View
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: [{ translateX: -24 }, { translateY: -24 }],
-                          zIndex: 2,
-                        }}
-                      >
-                        <Text
-                          style={{ fontSize: 48, color: theme.colors.success }}
-                        >
-                          ✅
-                        </Text>
-                      </View>
-                      {/* Removed duplicate retake button */}
-                    </View>
-                  </View>
-                </>
+                  />
+                  {/* Tick icon centered inside circle */}
+                  <Animated.View
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      zIndex: 2,
+                      transform: [
+                        { translateX: -60 },
+                        { translateY: -60 },
+                        { scale: pulseAnim },
+                      ],
+                    }}>
+                    <Image
+                      source={require('../Assets/selected.png')}
+                      style={{ width: 120, height: 120 }}
+                      resizeMode="contain"
+                    />
+                  </Animated.View>
+                  {/* Removed duplicate retake button */}
+                </View>
               ) : (
                 <>
                   <Camera
@@ -447,12 +446,12 @@ const FaceVerificationScreen: React.FC = () => {
                 </>
               )}
 
-              {captureProgress > 0 && (
+              {captureProgress > 0 && !(capturedFace && captureProgress >= 100) && (
                 <View style={styles.progressOverlay}>
                   <View style={styles.progressCircle} />
                 </View>
               )}
-            </Animated.View>
+            </View>
           ) : (
             <Animated.View
               style={[styles.faceFrame, { transform: [{ scale: pulseAnim }] }]}
@@ -502,52 +501,32 @@ const FaceVerificationScreen: React.FC = () => {
 
         <View style={styles.buttonContainer}>
           {/* Retake button just above main action, right-aligned */}
-          {capturedFace && (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                marginBottom: 28,
-              }}
-            >
-              <TouchableOpacity
+          {capturedFace ? (
+            <View style={{ flexDirection: 'row', gap: 12, marginBottom: 8 }}>
+              <Button
+                title="Retake"
                 onPress={() => {
-                  // Reset all state so user must click Start Face Verification again
                   setCapturedFace(null);
                   setIsDetecting(false);
                   setFaceDetected(false);
                   setCaptureProgress(0);
-                  setInstruction(
-                    "Take the picture in bright light, and position your face in the frame."
-                  );
+                  setInstruction("Take the picture in bright light, and position your face in the frame.");
                   progressAnim.setValue(0);
                 }}
-              >
-                <Text
-                  style={{
-                    color: theme.colors.error,
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    paddingHorizontal: 16,
-                  }}
-                >
-                  Retake
-                </Text>
-              </TouchableOpacity>
+                variant="outline"
+                style={{ flex: 1 }}
+              />
+              <Button
+                title={STRINGS.common.continue}
+                onPress={completeFaceVerification}
+                loading={isProcessing}
+                style={{ flex: 1 }}
+              />
             </View>
-          )}
-          {/* Show Continue button only when capturedFace, else show Start Face Verification/Cancel/Allow Camera Access */}
-          {!hasPermission ? (
+          ) : !hasPermission ? (
             <Button
               title="Allow Camera Access"
               onPress={requestPermission}
-              fullWidth
-            />
-          ) : capturedFace ? (
-            <Button
-              title={STRINGS.common.continue}
-              onPress={completeFaceVerification}
-              loading={isProcessing}
               fullWidth
             />
           ) : !isDetecting ? (

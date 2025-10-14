@@ -9,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue, useRecoilState} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
-import {Button} from '../components';
+import {Button, Logo} from '../components';
 import {verificationState, verificationProgressSelector, themeState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
 import {isDevelopment} from '../config/environment';
@@ -55,6 +55,9 @@ const HomeScreen: React.FC = () => {
       fontSize: theme.typography.fontSize.xl,
       fontWeight: theme.typography.fontWeight.medium,
       color: theme.colors.primary,
+    },
+    logoContainer: {
+      marginTop: theme.spacing.md,
     },
     progressContainer: {
       backgroundColor: theme.colors.cardBackground,
@@ -161,7 +164,7 @@ const HomeScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.appName}>{STRINGS.appName}</Text>
+          <Logo size="large" variant="vertical" showTagline={true} style={styles.logoContainer} />
         </View>
 
         {100 === 100 ? (

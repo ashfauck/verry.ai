@@ -42,7 +42,7 @@ export interface FaceCapture {
 }
 
 export interface Theme {
-  colors: typeof import('../constants/theme').COLORS.light | typeof import('../constants/theme').COLORS.dark;
+  colors: typeof import('../constants/theme').COLORS.light | typeof import('../constants/theme').COLORS.dark | typeof import('../constants/theme').COLORS.orangeDark;
   typography: typeof import('../constants/theme').TYPOGRAPHY;
   spacing: typeof import('../constants/theme').SPACING;
   borderRadius: typeof import('../constants/theme').BORDER_RADIUS;

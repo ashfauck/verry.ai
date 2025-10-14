@@ -213,7 +213,7 @@ const EmailVerificationScreen: React.FC = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       {/* Progress Bar */}
-      <View style={{ width: '100%', height: 8, backgroundColor: theme.colors.inputBorder }}>
+      <View style={{ width: '100%', height: 8, backgroundColor: theme.colors.inputBorder, top: 75 }}>
         <View
           style={{
             width: `${progressPercent}%`,
