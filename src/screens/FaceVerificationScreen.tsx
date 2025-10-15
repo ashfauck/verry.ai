@@ -102,7 +102,7 @@ const FaceVerificationScreen: React.FC = () => {
           captureFacePhoto();
           return 100;
         }
-        return prev + 2;
+        return prev + 5;
       });
     }, 60);
   };
@@ -388,7 +388,7 @@ const FaceVerificationScreen: React.FC = () => {
                         Animated.loop(
                           Animated.sequence([
                             Animated.timing(pulseAnim, {
-                              toValue: 1.1,
+                              toValue: 1.5,
                               duration: 1000,
                               useNativeDriver: true,
                             }),

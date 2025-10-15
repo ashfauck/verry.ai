@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Animated,
+  Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue, useRecoilState} from 'recoil';
@@ -16,10 +18,30 @@ import {isDevelopment} from '../config/environment';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const {theme, themeMode, setThemeMode} = useTheme();
+  const {theme, themeMode, setThemeMode, isDark} = useTheme();
   const verification = useRecoilValue(verificationState);
   const progress = useRecoilValue(verificationProgressSelector);
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+  const [localProgress, setLocalProgress] = useState(70);
+  const progressAnimation = useRef(new Animated.Value(10)).current;
+
+  useEffect(() => {
+    if (localProgress < 100) {
+      const timer = setTimeout(() => {
+        const newProgress = Math.min(localProgress + 10, 100);
+        setLocalProgress(newProgress);
+        
+        // Animate to the new progress value smoothly
+        Animated.timing(progressAnimation, {
+          toValue: newProgress,
+          duration: 600, // Smooth 600ms animation
+          useNativeDriver: false, // Width animations don't support native driver
+        }).start();
+      }, 600); // Increment every 600 milliseconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [localProgress, progressAnimation]);
 
   const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -42,6 +64,8 @@ const HomeScreen: React.FC = () => {
     },
     header: {
       alignItems: 'center',
+      flex: 1,
+      justifyContent: 'center',
       marginBottom: theme.spacing.xl,
     },
     welcomeText: {
@@ -105,7 +129,7 @@ const HomeScreen: React.FC = () => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingVertical: theme.spacing.sm,
-      borderBottomWidth: 1,
+      borderBottomWidth: 0,
       borderBottomColor: theme.colors.divider,
     },
     statusIcon: {
@@ -152,39 +176,68 @@ const HomeScreen: React.FC = () => {
       marginBottom: theme.spacing.md,
     },
     completeText: {
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
-      color: 'white',
+      fontSize: theme.typography.fontSize.lg,
+      fontWeight: theme.typography.fontWeight.medium,
+      color: theme.colors.textPrimary,
+      // letterSpacing: 1,
+      lineHeight: 30,
       textAlign: 'center',
+      marginTop: theme.spacing.xl,
     },
   });
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.welcomeText}>Welcome to</Text>
           <Logo size="large" variant="vertical" showTagline={true} style={styles.logoContainer} />
+        </View> */}
+        <View style={styles.header}>
+          <Image
+            source={!isDark ? require("../Assets/KYC_Completed_light.png") : require("../Assets/KYC_Completed.png")}
+            style={[
+              {
+                width: 200,
+                height: 200,
+                resizeMode: "center",
+                alignContent: "center",
+                alignSelf: "center",
+              },
+            ]}
+            resizeMode="center"
+          />
+          <Text style={{...styles.completeText, fontSize: theme.typography.fontSize['3xl']}}>{STRINGS.success.kycComplete}</Text>
+          <Text style={styles.completeText}>{STRINGS.success.thanks}</Text>
         </View>
-
-        {100 === 100 ? (
+        {/* {localProgress === 100 ? (
           <View style={styles.completeContainer}>
             <Text style={styles.completeIcon}>🎉</Text>
             <Text style={styles.completeText}>
-              {STRINGS.success.verificationComplete}
+              {STRINGS.success.thanks}
             </Text>
           </View>
         ) : (
           <View style={styles.progressContainer}>
             <Text style={styles.progressTitle}>Verification Progress</Text>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: `${progress}%` }]} />
+              <Animated.View 
+                style={[
+                  styles.progressFill, 
+                  { 
+                    width: progressAnimation.interpolate({
+                      inputRange: [0, 100],
+                      outputRange: ['0%', '100%'],
+                    })
+                  }
+                ]} 
+              />
             </View>
-            <Text style={styles.progressText}>{progress}% Complete</Text>
+            <Text style={styles.progressText}>{localProgress}% Complete</Text>
           </View>
-        )}
+        )} */}
 
-        <View style={styles.statusContainer}>
+        {/* <View style={styles.statusContainer}>
           <Text style={styles.statusTitle}>Verification Status</Text>
 
           <View style={styles.statusItem}>
@@ -206,11 +259,11 @@ const HomeScreen: React.FC = () => {
             </Text>
             <Text style={styles.statusText}>Facial Verification</Text>
           </View>
-        </View>
+        </View> */}
 
         {/*  */}
 
-        {isDevelopment() && (
+        {/* {isDevelopment() && (
           <>
             <View style={styles.settingsContainer}>
               <Text style={styles.settingsTitle}>{STRINGS.settings.theme}</Text>
@@ -235,14 +288,19 @@ const HomeScreen: React.FC = () => {
               />
             </View>
           </>
-        )}
+        )} */}
       </ScrollView>
       {/* Go to Home Button at the bottom */}
-      <View style={{padding: theme.spacing.lg, backgroundColor: theme.colors.background}}>
+      <View
+        style={{
+          padding: theme.spacing.lg,
+          backgroundColor: theme.colors.background,
+        }}
+      >
         <Button
           title="Go to Home"
           fullWidth
-          onPress={() => (navigation as any).navigate('Onboarding')}
+          onPress={() => (navigation as any).navigate("Onboarding")}
         />
       </View>
     </SafeAreaView>

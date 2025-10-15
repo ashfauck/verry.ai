@@ -7,7 +7,10 @@ import {
   Dimensions,
   SafeAreaView,
   Alert,
+  Image,
+  ImageSourcePropType,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
@@ -23,7 +26,8 @@ const {width: screenWidth} = Dimensions.get('window');
 interface OnboardingStep {
   title: string;
   description: string;
-  icon: string;
+  iconName?: string; // For vector icons
+  iconImage?: ImageSourcePropType; // For custom PNG images
 }
 
 const OnboardingScreen: React.FC = () => {
@@ -41,17 +45,17 @@ const OnboardingScreen: React.FC = () => {
     {
       title: STRINGS.onboarding.step1Title,
       description: STRINGS.onboarding.step1Description,
-      icon: '📧',
+      iconImage: require('../Assets/gemini_email.png'),
     },
     {
       title: STRINGS.onboarding.step2Title,
       description: STRINGS.onboarding.step2Description,
-      icon: '📄',
+      iconImage: require('../Assets/doc_verification.png'),
     },
     {
       title: STRINGS.onboarding.step3Title,
       description: STRINGS.onboarding.step3Description,
-      icon: '👤',
+      iconImage: require('../Assets/face_verification.png'),
     },
   ];
 
@@ -198,7 +202,6 @@ const OnboardingScreen: React.FC = () => {
       marginVertical: theme.spacing['2xl'],
     },
     stepIcon: {
-      fontSize: 80,
       marginBottom: theme.spacing.xl,
     },
     stepTitle: {
@@ -248,15 +251,25 @@ const OnboardingScreen: React.FC = () => {
       <View style={styles.content}>
         {currentStep === 0 && (
           <View style={styles.welcomeContainer}>
-            <Text style={styles.welcomeTitle}>Welcome to</Text>
             <Logo size="large" variant="vertical" showTagline={true} style={styles.logoContainer} />
           </View>
         )}
         
         <View style={styles.stepContainer}>
-          <Text style={styles.stepIcon}>
-            {onboardingSteps[currentStep].icon}
-          </Text>
+          {onboardingSteps[currentStep].iconImage ? (
+            <Image 
+              source={onboardingSteps[currentStep].iconImage!}
+              style={[styles.stepIcon, { width: 100, height: 100 }]}
+              resizeMode="contain"
+            />
+          ) : (
+            <Icon 
+              name={onboardingSteps[currentStep].iconName!} 
+              size={80} 
+              color={theme.colors.primary}
+              style={styles.stepIcon}
+            />
+          )}
           <Text style={styles.stepTitle}>
             {onboardingSteps[currentStep].title}
           </Text>

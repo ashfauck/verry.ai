@@ -108,6 +108,8 @@ export const STRINGS = {
     verificationComplete: 'Verification completed successfully!',
     documentUploaded: 'Document uploaded successfully',
     profileUpdated: 'Profile updated successfully',
+    thanks: 'Thanks for submitting your documents we\'ll verify it and complete your KYC as soon as possible.',
+    kycComplete: 'KYC Completed',
   },
   
   // Settings

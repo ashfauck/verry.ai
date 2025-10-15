@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import AppIcon from '../Assets/appIcon.svg';
+import SecureEmail from '../Assets/secure_email.svg';
 import { useTheme } from './ThemeProvider';
 
 interface VerryIconProps {
@@ -9,6 +10,10 @@ interface VerryIconProps {
 
 const VerryIcon: React.FC<VerryIconProps> = ({ size }) => {
   return <AppIcon width={size} height={size} />;
+};
+
+export const EmailIcon: React.FC<VerryIconProps> = ({ size }) => {
+  return <SecureEmail width={size} height={size} />;
 };
 
 interface LogoProps {
@@ -86,6 +91,7 @@ export const Logo: React.FC<LogoProps> = ({
           {
             fontSize: sizeStyles.taglineSize,
             color: theme.colors.textSecondary,
+            marginTop: 15,
           }
         ]}>
           Secure Identity Verification

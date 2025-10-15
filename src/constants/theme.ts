@@ -50,9 +50,9 @@ export const COLORS = {
   },
   orangeDark: {
     // Primary colors
-    primary: '#F39E60',
+    primary: '#47CEF1',
     primaryLight: '#9F5255',
-    primaryDark: '#F39E60',
+    primaryDark: '#47CEF9',
     
     // Secondary colors
     secondary: '#10B981',
@@ -60,7 +60,7 @@ export const COLORS = {
     secondaryDark: '#059669',
     
     // Background colors
-    background: '#37353E',
+    background: '#000',
     backgroundSecondary: '#44444E',
     surface: '#373551',
     
@@ -80,9 +80,9 @@ export const COLORS = {
     info: '#3B82F6',
     
     // Button colors
-    buttonPrimary: '#F39E60',
+    buttonPrimary: '#FF5758',
     buttonSecondary: '#D3DAD9',
-    buttonText: '#000',
+    buttonText: '#fff',
     buttonTextSecondary: '#F9FAFB',
     
     // Input colors
@@ -92,7 +92,7 @@ export const COLORS = {
     inputPlaceholder: '#9CA3AF',
     
     // Card colors
-    cardBackground: '#643843',
+    cardBackground: '#444',
     cardBorder: '#A04747',
     cardShadow: 'rgba(0, 0, 0, 0.25)',
   },
