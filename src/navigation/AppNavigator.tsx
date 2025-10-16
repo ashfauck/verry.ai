@@ -14,8 +14,10 @@ import OnboardingScreen from '@screens/OnboardingScreen';
 import HomeScreen from '@screens/HomeScreen';
 import EnvironmentInfoScreen from '@screens/EnvironmentInfoScreen';
 import NotFoundScreen from '@screens/NotFoundScreen';
+import SplashScreen from '@screens/SplashScreen';
 
 export type RootStackParamList = {
+  Splash: undefined;
   Onboarding: undefined;
   EmailVerification: undefined;
   DocumentCapture: undefined;
@@ -42,11 +44,12 @@ const AppNavigator: React.FC = () => {
     <>
       <React.Fragment>
         <Stack.Navigator
-          initialRouteName={isVerificationComplete ? 'Home' : 'Onboarding'}
+          initialRouteName="Splash"
           screenOptions={{
             headerShown: false,
             gestureEnabled: false,
           }}>
+          <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
           <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
           <Stack.Screen name="DocumentCapture" component={DocumentCaptureScreen} />
