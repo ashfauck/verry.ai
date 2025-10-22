@@ -35,7 +35,6 @@ const FaceVerificationScreen: React.FC = () => {
   const [isDetecting, setIsDetecting] = useState(false);
   const [faceDetected, setFaceDetected] = useState(false);
   const [captureProgress, setCaptureProgress] = useState(0);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [instruction, setInstruction] = useState<string>('Take the picture in bright light, and position your face in the frame.');
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [capturedFace, setCapturedFace] = useState<string | null>(null);
@@ -136,15 +135,12 @@ const FaceVerificationScreen: React.FC = () => {
       Alert.alert(STRINGS.common.error, 'No face image captured');
       return;
     }
-    setIsProcessing(true);
     setInstruction(STRINGS.face.processingFace);
     try {
       await uploadAttachments(capturedFace);
     } catch (error) {
       Alert.alert(STRINGS.common.error, STRINGS.errors.serverError);
       resetFaceDetection();
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -194,6 +190,18 @@ const FaceVerificationScreen: React.FC = () => {
         faceVerified: true,
         currentStep: 'complete',
       }));
+
+      // Fire async scoring API call without waiting for response
+      if (verificationId && attemptId) {
+        apiService.scoreMobileAppStage({
+          verification_id: verificationId,
+          attempt_id: attemptId,
+          stage: 'face',
+        }).catch(error => {
+          console.warn('Face stage scoring failed:', error);
+          // Don't block user flow on scoring failure
+        });
+      }
 
       showSnackbar(STRINGS.success.verificationComplete);
 
@@ -519,7 +527,6 @@ const FaceVerificationScreen: React.FC = () => {
               <Button
                 title={STRINGS.common.continue}
                 onPress={completeFaceVerification}
-                loading={isProcessing}
                 style={{ flex: 1 }}
               />
             </View>

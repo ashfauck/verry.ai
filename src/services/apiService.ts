@@ -1,3 +1,23 @@
+// --- Mobile App Scoring API Types ---
+export interface MobileAppScoringRequest {
+  verification_id: string;
+  attempt_id: string;
+  stage: 'email' | 'document' | 'face' | 'final';
+}
+
+export interface MobileAppScoringResponse {
+  success: boolean;
+  message: string;
+  data: {
+    verification_id: string;
+    attempt_id: string;
+    stage: string;
+    email_verification_score?: number;
+    email_verification_status?: string;
+    onboarding_channel?: string;
+  };
+}
+
 // --- Document Upload API Types ---
 export interface DocumentUploadRequest {
   image_url: string;
@@ -87,6 +107,7 @@ export interface SendVerificationEmailResponse {
   emailId: string;
 }
 import environment, {buildApiUrl, shouldLog} from '../config/environment';
+import {loaderController} from '../utils/loaderController';
 
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -102,13 +123,19 @@ export interface ApiError {
 }
 
 class ApiService {
-  private baseTimeout = environment.apiTimeout;
+  private baseTimeout = 60000; //environment.apiTimeout;
 
   private async makeRequest<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    skipLoader: boolean = false
   ): Promise<ApiResponse<T>> {
     const url = buildApiUrl(endpoint);
+    
+    // Show loader for all API calls except when skipLoader is true
+    if (!skipLoader) {
+      loaderController.show();
+    }
   
     if (shouldLog('debug')) {
       console.log(`API Request: ${options.method || 'GET'} ${url}`);
@@ -148,6 +175,11 @@ class ApiService {
         console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
       }
 
+      // Hide loader on response
+      if (!skipLoader) {
+        loaderController.hide();
+      }
+
       if (!response.ok) {
         return {
           success: false,
@@ -161,6 +193,11 @@ class ApiService {
       };
     } catch (error: any) {
       clearTimeout(timeoutId);
+      
+      // Hide loader on error
+      if (!skipLoader) {
+        loaderController.hide();
+      }
       
       if (shouldLog('error')) {
         console.error('API Error:', error);
@@ -267,6 +304,30 @@ class ApiService {
       },
       body: JSON.stringify(req),
     });
+  }
+
+  // Mobile App Scoring
+  /**
+   * Updates verification stage scoring for mobile onboarding channels.
+   * This call is made asynchronously without waiting for the response.
+   * @param req The request containing verification_id, attempt_id, and stage
+   * @param apiKey The API key for authentication
+   * @param clientId The client ID for authentication
+   */
+  async scoreMobileAppStage(
+    req: MobileAppScoringRequest,
+    apiKey: string = 'ak_7de890fa1b8649dbb7b3d554',
+    clientId: string = 'cli_4mtqfircysno'
+  ): Promise<ApiResponse<MobileAppScoringResponse>> {
+    // Skip loader for scoring API - it's a background call
+    return this.makeRequest<MobileAppScoringResponse>('mobile-app-scoring', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'x-client-id': clientId,
+      },
+      body: JSON.stringify(req),
+    }, true);
   }
 
   // Face Verification

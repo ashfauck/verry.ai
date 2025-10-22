@@ -30,7 +30,6 @@ const EmailVerificationScreen: React.FC = () => {
   const [email, setEmail] = useState(verification.email || '');
   const [verificationCode, setVerificationCode] = useState('');
   const [isCodeSent, setIsCodeSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(0);
   const attemptId = useRecoilValue(attemptIdState);
 
@@ -48,7 +47,6 @@ const EmailVerificationScreen: React.FC = () => {
       return;
     }
 
-    setIsLoading(true);
     try {
       // Generate a verificationAttemptId (UUID)
       // Always use verificationAttemptId from Recoil state, generate/store if missing
@@ -88,8 +86,6 @@ const EmailVerificationScreen: React.FC = () => {
       }
     } catch (error: any) {
       Alert.alert(STRINGS.common.error, error.message || STRINGS.errors.networkError);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -99,7 +95,6 @@ const EmailVerificationScreen: React.FC = () => {
       return;
     }
 
-    setIsLoading(true);
     try {
       
       const response = await apiService.verifyEmailCode({
@@ -116,6 +111,19 @@ const EmailVerificationScreen: React.FC = () => {
             error: null,
           }));
 
+        // Fire async scoring API call without waiting for response
+        const verificationId = response.data?.verificationStatus?.verificationId;
+        if (verificationId && attemptId) {
+          apiService.scoreMobileAppStage({
+            verification_id: verificationId,
+            attempt_id: attemptId,
+            stage: 'email',
+          }).catch(error => {
+            console.warn('Email stage scoring failed:', error);
+            // Don't block user flow on scoring failure
+          });
+        }
+
         navigation.navigate('DocumentCapture');
       } else {
           Alert.alert(STRINGS.common.error, response.error || STRINGS.errors.networkError);
@@ -123,8 +131,6 @@ const EmailVerificationScreen: React.FC = () => {
       
     } catch (error) {
       Alert.alert(STRINGS.common.error, STRINGS.errors.networkError);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -245,15 +251,13 @@ const EmailVerificationScreen: React.FC = () => {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                editable={!isLoading}
               />
             </View>
             <View style={styles.buttonContainer}>
               <Button
                 title={STRINGS.auth.sendCode}
                 onPress={sendVerificationCode}
-                loading={isLoading}
-                disabled={!email.trim() || isLoading}
+                disabled={!email.trim()}
                 fullWidth
               />
             </View>
@@ -275,15 +279,13 @@ const EmailVerificationScreen: React.FC = () => {
                 onChangeText={setVerificationCode}
                 keyboardType="numeric"
                 maxLength={6}
-                editable={!isLoading}
               />
             </View>
             <View style={styles.buttonContainer}>
               <Button
                 title={STRINGS.auth.verifyEmail}
                 onPress={verifyCode}
-                loading={isLoading}
-                disabled={verificationCode.length !== 6 || isLoading}
+                disabled={verificationCode.length !== 6}
                 fullWidth
               />
             </View>
@@ -298,7 +300,6 @@ const EmailVerificationScreen: React.FC = () => {
                   onPress={sendVerificationCode}
                   variant="ghost"
                   size="small"
-                  disabled={isLoading}
                 />
               )}
             </View>

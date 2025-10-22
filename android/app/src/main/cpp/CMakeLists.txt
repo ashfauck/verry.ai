@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.13)
 project(DocumentProcessor)
 
+# Find React Native directory
+set(RN_DIR ${CMAKE_SOURCE_DIR}/../../../../../node_modules/react-native)
+set(REACT_ANDROID_DIR ${RN_DIR}/ReactAndroid)
+
+# Include React Native JSI headers
+include_directories(
+  ${RN_DIR}/ReactCommon/jsi
+  ${RN_DIR}/ReactAndroid/src/main/jni/react/turbomodule
+  ${RN_DIR}/ReactCommon
+  ${RN_DIR}/ReactCommon/callinvoker
+  ${RN_DIR}/ReactCommon/runtimeexecutor
+)
+
 add_library(document-processor SHARED DocumentProcessor.cpp)
 
 # To enable OpenCV on Android, vendor OpenCV SDK or use a prebuilt distribution then:
@@ -22,4 +35,6 @@ add_library(document-processor SHARED DocumentProcessor.cpp)
 
 find_library(log-lib log)
 
-target_link_libraries(document-processor ${log-lib})
+# Link with Android log library only
+# JSI is header-only and symbols will be resolved at runtime by React Native
+target_link_libraries(document-processor ${log-lib} android)

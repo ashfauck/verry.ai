@@ -18,4 +18,13 @@ buildscript {
     }
 }
 
+// Configure Kotlin compilation to not treat warnings as errors
+allprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            allWarningsAsErrors = false
+        }
+    }
+}
+
 apply plugin: "com.facebook.react.rootproject"

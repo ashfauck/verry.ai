@@ -51,7 +51,7 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 
     /* Autolinking */
-    autolinkLibrariesWithApp()
+    // Removed autolinkLibrariesWithApp() - not needed in React Native 0.74
 }
 
 /**
@@ -102,6 +102,7 @@ android {
             resValue "string", "app_name", "Verry Dev"
             buildConfigField "String", "ENVIRONMENT", '"development"'
             buildConfigField "String", "API_URL", '"https://dev-api.verry.ai"'
+            manifestPlaceholders = [usesCleartextTraffic: "true"]
         }
         
         staging {
@@ -111,6 +112,7 @@ android {
             resValue "string", "app_name", "Verry Staging"
             buildConfigField "String", "ENVIRONMENT", '"staging"'
             buildConfigField "String", "API_URL", '"https://staging-api.verry.ai"'
+            manifestPlaceholders = [usesCleartextTraffic: "true"]
         }
         
         production {
@@ -119,6 +121,7 @@ android {
             resValue "string", "app_name", "Verry"
             buildConfigField "String", "ENVIRONMENT", '"production"'
             buildConfigField "String", "API_URL", '"https://api.verry.ai"'
+            manifestPlaceholders = [usesCleartextTraffic: "false"]
         }
     }
     signingConfigs {
@@ -142,11 +145,12 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path file("src/main/cpp/CMakeLists.txt")
-        }
-    }
+    // Temporarily disable native build until JSI linking is properly configured
+    // externalNativeBuild {
+    //     cmake {
+    //         path file("src/main/cpp/CMakeLists.txt")
+    //     }
+    // }
 }
 
 dependencies {

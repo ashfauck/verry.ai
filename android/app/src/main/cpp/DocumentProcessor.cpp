@@ -129,12 +129,15 @@ void install(jsi::Runtime &rt) {
     }
   ));
   global.setProperty(rt, "__DocumentProcessor", std::move(doc));
+}
 
-    // JNI entry for frame processor plugin: processes a Y (luma) plane buffer and returns metrics.
-    extern "C" JNIEXPORT jobjectArray JNICALL
-    Java_com_verryapp_document_DocumentFrameProcessorPlugin_detectFromY(
-      JNIEnv *env, jclass clazz, jobject yBuffer, jint width, jint height, jint rowStride
-    ) {
+} // namespace
+
+// JNI entry for frame processor plugin: processes a Y (luma) plane buffer and returns metrics.
+extern "C" JNIEXPORT jobjectArray JNICALL
+Java_com_verryapp_document_DocumentFrameProcessorPlugin_detectFromY(
+  JNIEnv *env, jclass clazz, jobject yBuffer, jint width, jint height, jint rowStride
+) {
       if (yBuffer == nullptr || width <= 0 || height <= 0) {
         return nullptr;
       }
@@ -231,10 +234,7 @@ void install(jsi::Runtime &rt) {
       putKD(1, "width", width);
       putKD(2, "height", height);
       return out;
-    }
 }
-
-} // namespace
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_verryapp_document_DocumentProcessorInstaller_installNative(JNIEnv *env, jobject thiz, jlong jsContextNativePointer) {

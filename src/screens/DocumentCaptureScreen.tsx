@@ -265,6 +265,18 @@ const DocumentCaptureScreen: React.FC<DocumentCaptureScreenProps> = () => {
       }
     }
     if (allSuccess) {
+      // Fire async scoring API call without waiting for response
+      if (verificationId && attemptId) {
+        apiService.scoreMobileAppStage({
+          verification_id: verificationId,
+          attempt_id: attemptId,
+          stage: 'document',
+        }).catch(error => {
+          console.warn('Document stage scoring failed:', error);
+          // Don't block user flow on scoring failure
+        });
+      }
+
       setTimeout(() => {
         (navigation as any).navigate('FaceVerification');
       }, 1200);

@@ -12,9 +12,10 @@ import {useNavigation} from '@react-navigation/native';
 import {useRecoilValue, useRecoilState} from 'recoil';
 import {useTheme} from '../components/ThemeProvider';
 import {Button, Logo} from '../components';
-import {verificationState, verificationProgressSelector, themeState} from '../store/atoms';
+import {verificationState, verificationProgressSelector, themeState, verificationIdState, attemptIdState} from '../store/atoms';
 import {STRINGS} from '../constants/strings';
 import {isDevelopment} from '../config/environment';
+import {apiService} from '../services/apiService';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -24,6 +25,9 @@ const HomeScreen: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const [localProgress, setLocalProgress] = useState(70);
   const progressAnimation = useRef(new Animated.Value(10)).current;
+  const verificationId = useRecoilValue(verificationIdState);
+  const attemptId = useRecoilValue(attemptIdState);
+  const [hasScoredFinal, setHasScoredFinal] = useState(false);
 
   useEffect(() => {
     if (localProgress < 100) {
@@ -42,6 +46,21 @@ const HomeScreen: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [localProgress, progressAnimation]);
+
+  // Fire final stage scoring when HomeScreen mounts (verification complete)
+  // useEffect(() => {
+  //   if (verificationId && attemptId && !hasScoredFinal) {
+  //     setHasScoredFinal(true);
+  //     apiService.scoreMobileAppStage({
+  //       verification_id: verificationId,
+  //       attempt_id: attemptId,
+  //       stage: 'final',
+  //     }).catch(error => {
+  //       console.warn('Final stage scoring failed:', error);
+  //       // Don't block user flow on scoring failure
+  //     });
+  //   }
+  // }, [verificationId, attemptId, hasScoredFinal]);
 
   const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';

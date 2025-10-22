@@ -9,6 +9,7 @@ import AppNavigator from '@navigation/AppNavigator';
 import SnackbarController from './src/components/SnackbarController';
 import { setSnackbarRef } from './src/components/snackbarService';
 import ThemeProvider from '@components/ThemeProvider';
+import GlobalApiLoader from './src/components/GlobalApiLoader';
 import type {RootStackParamList} from '@navigation/AppNavigator';
 import linkingConfig from './src/config/linking';
 import 'react-native-url-polyfill/auto';
@@ -113,6 +114,8 @@ const App = (): JSX.Element => {
               {/* {<DeepLinkHandler navigationRef={navigationRef} />} */}
               <AppNavigator />
             </NavigationContainer>
+            {/* Global API Loader - appears above all screens when API calls are in progress */}
+            <GlobalApiLoader />
           </GestureHandlerRootView>
         </SafeAreaProvider>
       </ThemeProvider>
